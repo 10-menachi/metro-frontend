@@ -4,6 +4,7 @@ export const AlertContext = createContext();
 
 export const AlertProvider = ({ children }) => {
   const [show, setShow] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleClose = () => {
     setShow(false);
@@ -14,7 +15,7 @@ export const AlertProvider = ({ children }) => {
 
     setTimeout(() => {
       setShow(false);
-    }, 5000);
+    }, 3000);
   };
 
   return (

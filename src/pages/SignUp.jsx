@@ -1,22 +1,37 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { APP_ROUTES } from "../utils/constants";
-import { Link } from "react-router-dom";
 import Alert from "../components/Alert";
 import RoleSelect from "../components/RoleSelect";
 import { registerUser } from "../utils/common";
 
 const SignUp = () => {
   const [userData, setUserData] = useState({});
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const [show, setShow] = useState(true);
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    registerUser(userData);
-    navigate(APP_ROUTES.DASHBOARD);
+    try {
+      const success = await registerUser(userData);
+      if (!success) {
+        throw new Error("Registration failed");
+      }
+      navigate(APP_ROUTES.DASHBOARD);
+    } catch (error) {
+      setError(error.message);
+      setShow(true);
+      setTimeout(() => {
+        setShow(false);
+      }, 5000);
+    }
   };
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -32,7 +47,13 @@ const SignUp = () => {
               Create a new account
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-              <Alert error="An error occurred" />
+              {error && (
+                <Alert
+                  error={error}
+                  show={show}
+                  handleClose={() => setShow(false)}
+                />
+              )}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label

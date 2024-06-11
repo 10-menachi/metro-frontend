@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { APP_ROUTES } from "../utils/constants";
 import { loginUser } from "../utils/common";
+import Alert from "../components/Alert";
 
 const SignIn = () => {
   const [userData, setUserData] = useState({});
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const [show, setShow] = useState(true);
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -13,9 +16,27 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    loginUser(userData);
-    navigate(APP_ROUTES.DASHBOARD);
+    try {
+      loginUser(userData)
+        .then(() => {
+          navigate(APP_ROUTES.DASHBOARD);
+        })
+        .catch((error) => {
+          setError(error.message);
+          setShow(true); // Ensure alert is shown on error
+          setTimeout(() => {
+            setShow(false); // Hide alert after 5 seconds
+          }, 5000);
+        });
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const handleClose = () => {
+    setShow(false);
+  };
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -31,6 +52,9 @@ const SignIn = () => {
               Log in to your account
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+              {error && (
+                <Alert error={error} show={show} handleClose={handleClose} />
+              )}
               <div>
                 <label
                   htmlFor="email"

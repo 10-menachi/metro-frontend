@@ -15,21 +15,26 @@ export async function registerUser(userData) {
     const { access_token, token_type } = await response.data;
     storeTokenInLocalStorage(`${token_type} ${access_token}`);
     getAuthenticatedUser();
+    return true;
   } catch (error) {
-    console.error(error);
+    const { data } = error.response;
+    throw new Error(data.message);
   }
 }
 
 export async function loginUser(credentials) {
-  try {
-    const response = await axios.post(API_ROUTES.SIGN_IN, credentials);
-    const { access_token, token_type } = response.data;
-    storeTokenInLocalStorage(`${token_type} ${access_token}`);
-    getAuthenticatedUser();
-  } catch (error) {
-    console.error("Login failed:", error.response.data);
-    throw error.response.data;
-  }
+  return axios
+    .post(API_ROUTES.SIGN_IN, credentials)
+    .then((response) => {
+      const { access_token, token_type } = response.data;
+      storeTokenInLocalStorage(`${token_type} ${access_token}`);
+      getAuthenticatedUser();
+      return true;
+    })
+    .catch((error) => {
+      const { data } = error.response;
+      throw new Error(data.message);
+    });
 }
 
 export async function getAuthenticatedUser() {

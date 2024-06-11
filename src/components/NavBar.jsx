@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { APP_ROUTES } from "../utils/constants";
-import { useUser } from "../hooks/useUser";
 
-const NavBar = () => {
+const NavBar = ({ user }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { user, authenticated } = useUser();
   const { name, email, avatar, address, phone, role } = user || {};
   const logoutUser = () => {
     console.log("Logging out user");
@@ -14,10 +12,6 @@ const NavBar = () => {
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-
-  if (!authenticated) {
-    return null;
-  }
 
   const getInitials = (fullName) => {
     const names = fullName.split(" ");
