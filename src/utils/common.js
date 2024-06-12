@@ -37,6 +37,20 @@ export async function loginUser(credentials) {
     });
 }
 
+export async function registerEmployee(employeeData) {
+  return axios
+    .post(API_ROUTES.ADD_EMPLOYEE, employeeData)
+    .then((response) => {
+      const { user } = response.data;
+      console.log("Employee Added Successfully", user);
+      return true;
+    })
+    .catch((error) => {
+      const { data } = error.response;
+      throw new Error(data.message);
+    });
+}
+
 export async function getAuthenticatedUser() {
   const defaultReturnObject = { authenticated: false, user: null };
   try {

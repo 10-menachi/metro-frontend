@@ -17,7 +17,13 @@ const Dashboard = () => {
     <>
       <NavBar user={user} />
       <Sidebar permitted_to={permitted_to} />
-      <DashboardContent />
+      {permitted_to.includes("view dashboard") && (
+        <DashboardContent
+          employee_count={user.organisation.customers.length}
+          vehicles_count={user.organisation.vehicles.length}
+          drivers_count={user.organisation.drivers.length}
+        />
+      )}
     </>
   );
 };

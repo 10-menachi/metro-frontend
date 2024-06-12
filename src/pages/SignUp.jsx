@@ -22,7 +22,6 @@ const SignUp = () => {
       if (!success) {
         throw new Error("Registration failed");
       }
-      navigate(APP_ROUTES.DASHBOARD);
     } catch (error) {
       setError(error.message);
       setShow(true);

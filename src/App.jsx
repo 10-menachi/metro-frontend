@@ -9,6 +9,10 @@ import NotFound from "./pages/NotFound";
 import ForgotPassword from "./pages/ForgotPassword";
 import Users from "./pages/Users";
 import Profile from "./pages/Profile";
+import Employees from "./pages/Employees";
+import Drivers from "./pages/Drivers";
+import Vehicles from "./pages/Vehicles";
+import Trips from "./pages/Trips";
 
 const App = () => {
   return (
@@ -21,6 +25,10 @@ const App = () => {
       <Route path={APP_ROUTES.NOT_FOUND} element={<NotFound />} />
       <Route path={APP_ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
       <Route path={APP_ROUTES.USERS} element={<Users />} />
+      <Route path={APP_ROUTES.EMPLOYEES} element={<Employees />} />
+      <Route path={APP_ROUTES.DRIVERS} element={<Drivers />} />
+      <Route path={APP_ROUTES.VEHICLES} element={<Vehicles />} />
+      <Route path={APP_ROUTES.TRIPS} element={<Trips />} />
     </Routes>
   );
 };
