@@ -3,7 +3,9 @@ export const API_ROUTES = {
   SIGN_UP: `${API_URL}/api/register`,
   SIGN_IN: `${API_URL}/api/login`,
   GET_USER: `${API_URL}/api/user`,
-  ADD_EMPLOYEE: `${API_URL}/api/customers`,
+  CUSTOMERS: `${API_URL}/api/customers`,
+  TRIPS: `${API_URL}/api/trip`,
+  ROUTES: `${API_URL}/api/routes`,
 };
 
 export const APP_ROUTES = {

@@ -1,7 +1,7 @@
 import React from "react";
 import TripsTable from "../components/TripsTable";
 
-const TripContent = () => {
+const TripContent = ({ trips, customers, routes }) => {
   return (
     <div className="p-4 py-20 sm:ml-64 flex flex-col">
       <div className="flex justify-end mb-4">
@@ -9,7 +9,7 @@ const TripContent = () => {
           <i className="fa-solid fa-plus"></i>
         </button>
       </div>
-      <TripsTable />
+      <TripsTable trips={trips} customers={customers} routes={routes} />
     </div>
   );
 };

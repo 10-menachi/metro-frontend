@@ -1,6 +1,7 @@
 import React from "react";
+import TripTableRow from "./TripTableRow";
 
-const TripsTable = () => {
+const TripsTable = ({ trips, customers, routes }) => {
   return (
     <div className="relative overflow-x-auto">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -30,17 +31,24 @@ const TripsTable = () => {
           </tr>
         </thead>
         <tbody>
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th scope="row" className="px-6 py-4 ">
-              Faith Mupe
-            </th>
-            <td className="px-6 py-4">MJK1872</td>
-            <td className="px-6 py-4">Tudor/Ferry-Route</td>
-            <td className="px-6 py-4">12:00 - 21:00</td>
-            <td className="px-6 py-4">6/2/2024</td>
-            <td className="px-6 py-4">0725428102</td>
-            <td className="px-6 py-4">Makupa, Juakali</td>
-          </tr>
+          {trips.map((trip) => {
+            const route = routes.find(
+              (route) => route.id === trip.preferred_route_id
+            );
+            const customer = customers.find(
+              (customer) => customer.id === trip.customer_id
+            );
+            const { user } = customer;
+            user.org_code = customer.customer_organisation_code;
+            return (
+              <TripTableRow
+                key={trip.id}
+                trip={trip}
+                customer={user}
+                route={route}
+              />
+            );
+          })}
         </tbody>
       </table>
     </div>

@@ -58,6 +58,33 @@ export async function registerEmployee(employeeData) {
     });
 }
 
+export async function getTrips() {
+  const trips = await axios.get(API_ROUTES.TRIPS, {
+    headers: {
+      Authorization: getTokenFromLocalStorage(),
+    },
+  });
+  return trips.data;
+}
+
+export async function getCustomers() {
+  const response = await axios.get(API_ROUTES.CUSTOMERS, {
+    headers: {
+      Authorization: getTokenFromLocalStorage(),
+    },
+  });
+  return response.data;
+}
+
+export async function getRoutes() {
+  const response = await axios.get(API_ROUTES.ROUTES, {
+    headers: {
+      Authorization: getTokenFromLocalStorage(),
+    },
+  });
+  return response.data;
+}
+
 export async function getAuthenticatedUser() {
   const defaultReturnObject = { authenticated: false, user: null };
   try {

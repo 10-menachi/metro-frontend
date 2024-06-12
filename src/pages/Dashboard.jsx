@@ -12,7 +12,7 @@ const Dashboard = () => {
     return <Loading />;
   }
   const { permitted_to } = user;
-  console.log(user);
+  console.log(permitted_to);
   return (
     <>
       <NavBar user={user} />
