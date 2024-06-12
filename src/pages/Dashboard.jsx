@@ -11,8 +11,8 @@ const Dashboard = () => {
   if (!authenticated) {
     return <Loading />;
   }
-
   const { permitted_to } = user;
+  console.log(user);
   return (
     <>
       <NavBar user={user} />

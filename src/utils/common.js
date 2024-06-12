@@ -39,13 +39,20 @@ export async function loginUser(credentials) {
 
 export async function registerEmployee(employeeData) {
   return axios
-    .post(API_ROUTES.ADD_EMPLOYEE, employeeData)
+    .post(API_ROUTES.ADD_EMPLOYEE, {
+      headers: {
+        Authorization: getTokenFromLocalStorage(),
+      },
+      data: employeeData,
+    })
     .then((response) => {
+      console.log(response);
       const { user } = response.data;
       console.log("Employee Added Successfully", user);
       return true;
     })
     .catch((error) => {
+      console.log(error);
       const { data } = error.response;
       throw new Error(data.message);
     });
