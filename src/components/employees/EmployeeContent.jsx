@@ -12,12 +12,8 @@ const EmployeeContent = ({ user }) => {
 
   return (
     <div className="p-4 py-20 sm:ml-64 flex flex-col relative">
-      {/* Relative positioning for z-index */}
       <AddEmployeeButton handleOpen={handleOpen} />
-
       <EmployeeModal isOpen={isOpen} handleClose={handleClose} />
-
-      {/* Render EmployeeTable outside the modal */}
       <div className="mt-4">
         <EmployeeTable customers={customers} />
       </div>

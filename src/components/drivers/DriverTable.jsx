@@ -1,7 +1,7 @@
 import React from "react";
-import CustomerTableRow from "./CustomerTableRow";
+import DriverTableRow from "./DriverTableRow";
 
-const EmployeeTable = ({ customers }) => {
+const DriverTable = ({ drivers }) => {
   return (
     <div className="relative overflow-x-auto">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -25,9 +25,9 @@ const EmployeeTable = ({ customers }) => {
           </tr>
         </thead>
         <tbody>
-          {customers.map((customer) => {
-            const { user } = customer;
-            return <CustomerTableRow key={user.id} customer={user} />;
+          {drivers.map((driver) => {
+            const { user } = driver;
+            return <DriverTableRow key={user.id} driver={user} />;
           })}
         </tbody>
       </table>
@@ -35,4 +35,4 @@ const EmployeeTable = ({ customers }) => {
   );
 };
 
-export default EmployeeTable;
+export default DriverTable;

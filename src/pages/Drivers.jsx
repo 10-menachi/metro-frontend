@@ -3,8 +3,9 @@ import NavBar from "../components/NavBar";
 import Sidebar from "../components/Sidebar";
 import Loading from "../components/Loading";
 import { useUser } from "../hooks/useUser";
+import DriverContent from "../components/drivers/DriverContent";
 
-const Drivers = () => {
+const Employees = () => {
   const { user, authenticated } = useUser();
 
   if (!authenticated) {
@@ -16,8 +17,9 @@ const Drivers = () => {
     <div>
       <NavBar user={user} />
       <Sidebar permitted_to={permitted_to} />
+      <DriverContent user={user} />
     </div>
   );
 };
 
-export default Drivers;
+export default Employees;

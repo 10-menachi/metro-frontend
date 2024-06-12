@@ -1,7 +1,7 @@
 import React from "react";
 
-const CustomerTableRow = ({ customer }) => {
-  const { name, email, phone, address } = customer;
+const DriverTableRow = ({ driver }) => {
+  const { name, email, phone, address } = driver;
   return (
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
       <th
@@ -42,4 +42,4 @@ const CustomerTableRow = ({ customer }) => {
   );
 };
 
-export default CustomerTableRow;
+export default DriverTableRow;
