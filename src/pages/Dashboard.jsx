@@ -5,14 +5,11 @@ import Loading from "../components/Loading";
 import { useUser } from "../hooks/useUser";
 import DashboardContent from "../components/DashboardContent";
 
-const Dashboard = () => {
-  const { user, authenticated } = useUser();
-
+const Dashboard = ({ user, authenticated }) => {
   if (!authenticated) {
     return <Loading />;
   }
   const { permitted_to } = user;
-  console.log(permitted_to);
   return (
     <>
       <NavBar user={user} />

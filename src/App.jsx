@@ -12,23 +12,45 @@ import Profile from "./pages/Profile";
 import Employees from "./pages/Employees";
 import Drivers from "./pages/Drivers";
 import Vehicles from "./pages/Vehicles";
-import Trips from "./pages/Trips";
+import ScheduledTrips from "./pages/trips/ScheduledTrips";
+import CompletedTrips from "./pages/trips/CompletedTrips";
+import { useUser } from "./hooks/useUser";
 
 const App = () => {
+  const { user, authenticated } = useUser();
   return (
     <Routes>
       <Route exact path="/" element={<LandingPage />} />
-      <Route path={APP_ROUTES.PROFILE} element={<Profile />} />
+      <Route
+        path={APP_ROUTES.PROFILE}
+        element={<Profile user={user} authenticated={authenticated} />}
+      />
       <Route path={APP_ROUTES.SIGN_UP} exact element={<SignUp />} />
       <Route path={APP_ROUTES.SIGN_IN} element={<SignIn />} />
-      <Route path={APP_ROUTES.DASHBOARD} element={<Dashboard />} />
+      <Route
+        path={APP_ROUTES.DASHBOARD}
+        element={<Dashboard user={user} authenticated={authenticated} />}
+      />
       <Route path={APP_ROUTES.NOT_FOUND} element={<NotFound />} />
       <Route path={APP_ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
       <Route path={APP_ROUTES.USERS} element={<Users />} />
-      <Route path={APP_ROUTES.EMPLOYEES} element={<Employees />} />
-      <Route path={APP_ROUTES.DRIVERS} element={<Drivers />} />
-      <Route path={APP_ROUTES.VEHICLES} element={<Vehicles />} />
-      <Route path={APP_ROUTES.TRIPS} element={<Trips />} />
+      <Route
+        path={APP_ROUTES.EMPLOYEES}
+        element={<Employees user={user} authenticated={authenticated} />}
+      />
+      <Route
+        path={APP_ROUTES.DRIVERS}
+        element={<Drivers user={user} authenticated={authenticated} />}
+      />
+      <Route
+        path={APP_ROUTES.VEHICLES}
+        element={<Vehicles user={user} authenticated={authenticated} />}
+      />
+      <Route
+        path={APP_ROUTES.SCHEDULED_TRIPS}
+        element={<ScheduledTrips user={user} authenticated={authenticated} />}
+      />
+      <Route path={APP_ROUTES.COMPLETED_TRIPS} element={<CompletedTrips />} />
     </Routes>
   );
 };

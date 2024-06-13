@@ -4,9 +4,7 @@ import Sidebar from "../components/Sidebar";
 import { useUser } from "../hooks/useUser";
 import Loading from "../components/Loading";
 
-const Profile = () => {
-  const { user, authenticated } = useUser();
-
+const Profile = ({ user, authenticated }) => {
   if (!authenticated) {
     return <Loading />;
   }

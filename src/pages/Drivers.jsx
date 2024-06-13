@@ -5,9 +5,7 @@ import Loading from "../components/Loading";
 import { useUser } from "../hooks/useUser";
 import DriverContent from "../components/drivers/DriverContent";
 
-const Employees = () => {
-  const { user, authenticated } = useUser();
-
+const Drivers = ({ user, authenticated }) => {
   if (!authenticated) {
     return <Loading />;
   }
@@ -22,4 +20,4 @@ const Employees = () => {
   );
 };
 
-export default Employees;
+export default Drivers;

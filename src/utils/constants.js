@@ -19,5 +19,6 @@ export const APP_ROUTES = {
   EMPLOYEES: "/dashboard/employees",
   DRIVERS: "/dashboard/drivers",
   VEHICLES: "/dashboard/vehicles",
-  TRIPS: "/dashboard/trips",
+  SCHEDULED_TRIPS: "/dashboard/scheduled-trips",
+  COMPLETED_TRIPS: "/dashboard/completed-trips",
 };

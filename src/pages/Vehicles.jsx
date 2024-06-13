@@ -4,9 +4,7 @@ import Sidebar from "../components/Sidebar";
 import Loading from "../components/Loading";
 import { useUser } from "../hooks/useUser";
 
-const Vehicles = () => {
-  const { user, authenticated } = useUser();
-
+const Vehicles = ({ user, authenticated }) => {
   if (!authenticated) {
     return <Loading />;
   }

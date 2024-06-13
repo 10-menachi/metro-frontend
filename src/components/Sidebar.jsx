@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { APP_ROUTES } from "../utils/constants";
 
 const Sidebar = ({ permitted_to }) => {
+  const [isEcommerceDropdownOpen, setIsEcommerceDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsEcommerceDropdownOpen(!isEcommerceDropdownOpen);
+  };
+
   return (
     <aside
       id="logo-sidebar"
@@ -68,13 +74,56 @@ const Sidebar = ({ permitted_to }) => {
             </Link>
           </li>
           <li>
-            <Link
-              to={APP_ROUTES.TRIPS}
-              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            <button
+              type="button"
+              className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              aria-controls="dropdown-example"
+              data-collapse-toggle="dropdown-example"
+              onClick={toggleDropdown}
             >
-              <i className="fas fa-road flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-              <span className="flex-1 ms-3 whitespace-nowrap">Trips</span>
-            </Link>
+              <i className="fas fa-route"></i>
+              <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
+                Trips
+              </span>
+              <svg
+                className="w-3 h-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+            <ul
+              id="dropdown-example"
+              className={`${
+                isEcommerceDropdownOpen ? "" : "hidden"
+              } py-2 space-y-2`}
+            >
+              <li>
+                <Link
+                  to={APP_ROUTES.SCHEDULED_TRIPS}
+                  className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >
+                  Scheduled Trips
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={APP_ROUTES.COMPLETED_TRIPS}
+                  className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >
+                  Completed Trips
+                </Link>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>

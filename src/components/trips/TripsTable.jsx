@@ -31,24 +31,35 @@ const TripsTable = ({ trips, customers, routes }) => {
           </tr>
         </thead>
         <tbody>
-          {trips.map((trip) => {
-            const route = routes.find(
-              (route) => route.id === trip.preferred_route_id
-            );
-            const customer = customers.find(
-              (customer) => customer.id === trip.customer_id
-            );
-            const { user } = customer;
-            user.org_code = customer.customer_organisation_code;
-            return (
-              <TripTableRow
-                key={trip.id}
-                trip={trip}
-                customer={user}
-                route={route}
-              />
-            );
-          })}
+          {trips.length === 0 ? (
+            <tr>
+              <td
+                colSpan="7"
+                className="px-6 py-3 text-center text-gray-500 dark:text-gray-400"
+              >
+                No trips found
+              </td>
+            </tr>
+          ) : (
+            trips.map((trip) => {
+              const route = routes.find(
+                (route) => route.id === trip.preferred_route_id
+              );
+              const customer = customers.find(
+                (customer) => customer.id === trip.customer_id
+              );
+              const { user } = customer;
+              user.org_code = customer.customer_organisation_code;
+              return (
+                <TripTableRow
+                  key={trip.id}
+                  trip={trip}
+                  customer={user}
+                  route={route}
+                />
+              );
+            })
+          )}
         </tbody>
       </table>
     </div>

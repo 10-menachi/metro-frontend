@@ -5,9 +5,7 @@ import Loading from "../components/Loading";
 import { useUser } from "../hooks/useUser";
 import EmployeeContent from "../components/employees/EmployeeContent";
 
-const Employees = () => {
-  const { user, authenticated } = useUser();
-
+const Employees = ({ user, authenticated }) => {
   if (!authenticated) {
     return <Loading />;
   }
