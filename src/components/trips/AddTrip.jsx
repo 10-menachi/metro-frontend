@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useStateValue } from "../../context/AddTripContext";
 import Loading from "../Loading";
+import { addTrip } from "../../utils/common";
 
 const AddTrip = ({ isOpen, onClose }) => {
   const { state, dispatch } = useStateValue();
@@ -16,8 +17,8 @@ const AddTrip = ({ isOpen, onClose }) => {
           trip_date: "",
           start_time: "",
           end_time: "",
-          pickup_location: "home",
-          dropoff_location: "home",
+          pickup_location: "Home",
+          dropoff_location: "Home",
         },
       });
     }
@@ -34,7 +35,22 @@ const AddTrip = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(state.formData);
+
+    const tripData = {
+      customer_id: state.formData.customer,
+      preferred_route_id: state.formData.route,
+      pick_up_time: `${state.formData.start_time} - ${state.formData.end_time}`,
+      drop_off_or_pick_up_date: state.formData.trip_date,
+      pick_up_location: state.formData.pickup_location,
+      drop_off_location: state.formData.dropoff_location,
+    };
+
+    const isTripCreated = await addTrip(tripData);
+
+    if (isTripCreated) {
+      onClose();
+      window.location.reload();
+    }
   };
 
   if (!state.customers.length || !state.routes.length) return <Loading />;
@@ -189,8 +205,8 @@ const AddTrip = ({ isOpen, onClose }) => {
                     value={state.formData.pickup_location}
                     onChange={handleChange}
                   >
-                    <option value="home">Home</option>
-                    <option value="office">Office</option>
+                    <option value="Home">Home</option>
+                    <option value="Office">Office</option>
                   </select>
                 </div>
                 <div>
@@ -208,8 +224,8 @@ const AddTrip = ({ isOpen, onClose }) => {
                     value={state.formData.dropoff_location}
                     onChange={handleChange}
                   >
-                    <option value="home">Home</option>
-                    <option value="office">Office</option>
+                    <option value="Home">Home</option>
+                    <option value="Office">Office</option>
                   </select>
                 </div>
               </div>

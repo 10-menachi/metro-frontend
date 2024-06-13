@@ -1,7 +1,10 @@
 import React from "react";
 import TripTableRow from "./TripTableRow";
+import SchTrips from "./SchTrips";
 
-const TripsTable = ({ trips, customers, routes }) => {
+const TripsTable = ({ trips, customers, routes, sch_page }) => {
+  if (sch_page)
+    return <SchTrips trips={trips} routes={routes} customers={customers} />;
   return (
     <div className="relative overflow-x-auto">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">

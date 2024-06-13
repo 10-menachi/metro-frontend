@@ -4,12 +4,14 @@ import axios from "axios";
 import { API_ROUTES } from "../../utils/constants";
 import { registerEmployee } from "../../utils/common";
 
-const EmployeeModal = ({ isOpen, handleClose }) => {
+const EmployeeModal = ({ isOpen, handleClose, organisations }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     password: "",
+    organisation_id: "",
+    organisation_code: "",
   });
 
   const handleChange = (e) => {
@@ -17,18 +19,17 @@ const EmployeeModal = ({ isOpen, handleClose }) => {
   };
 
   const handleGeneratePassword = () => {
-    // Example function to generate a random password
     const generatedPassword = Math.random().toString(36).slice(-8);
     setFormData({ ...formData, password: generatedPassword });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = await registerEmployee(formData);
-    if (success) {
+
+    const isEmployeeAdded = await registerEmployee(formData);
+    if (isEmployeeAdded) {
       handleClose();
-    } else {
-      alert("Failed to add employee");
+      window.location.reload();
     }
   };
 
@@ -44,7 +45,7 @@ const EmployeeModal = ({ isOpen, handleClose }) => {
       leaveTo="opacity-0"
     >
       <div className="fixed inset-0 overflow-y-auto z-50">
-        <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div className="flex items-center justify-center min-h-screen px-4 text-center sm:block sm:p-0">
           <TransitionChild
             as={Fragment}
             enter="ease-out duration-300"
@@ -78,14 +79,14 @@ const EmployeeModal = ({ isOpen, handleClose }) => {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-2xl sm:w-full">
               <form onSubmit={handleSubmit} className="w-full">
                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <h2 className="text-xl font-bold text-gray-900 mb-4">
                     Add Employee
                   </h2>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="col-span-2 mb-4">
+                    <div className="col-span-1 mb-4">
                       <label
                         htmlFor="name"
                         className="block mb-2 text-sm font-medium text-gray-900"
@@ -103,7 +104,7 @@ const EmployeeModal = ({ isOpen, handleClose }) => {
                         required
                       />
                     </div>
-                    <div className="col-span-2 mb-4">
+                    <div className="col-span-1 mb-4">
                       <label
                         htmlFor="email"
                         className="block mb-2 text-sm font-medium text-gray-900"
@@ -121,7 +122,7 @@ const EmployeeModal = ({ isOpen, handleClose }) => {
                         required
                       />
                     </div>
-                    <div className="col-span-2 mb-4">
+                    <div className="col-span-1 mb-4">
                       <label
                         htmlFor="phone"
                         className="block mb-2 text-sm font-medium text-gray-900"
@@ -139,7 +140,7 @@ const EmployeeModal = ({ isOpen, handleClose }) => {
                         required
                       />
                     </div>
-                    <div className="col-span-2 mb-4 relative">
+                    <div className="col-span-1 mb-4 relative">
                       <label
                         htmlFor="password"
                         className="block mb-2 text-sm font-medium text-gray-900"
@@ -163,6 +164,48 @@ const EmployeeModal = ({ isOpen, handleClose }) => {
                       >
                         Generate
                       </button>
+                    </div>
+                    <div className="mb-4">
+                      <label
+                        htmlFor="organisation_id"
+                        className="block mb-2 text-sm font-medium text-gray-900"
+                      >
+                        Organization
+                      </label>
+                      <select
+                        id="organisation_id"
+                        name="organisation_id"
+                        value={formData.organisation_id}
+                        onChange={handleChange}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required
+                      >
+                        <option value="">Select an organization</option>
+                        {organisations.map((org) => (
+                          <option key={org.user.id} value={org.user.id}>
+                            {org.user.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="mb-4">
+                      <label
+                        htmlFor="organisation_code"
+                        className="block mb-2 text-sm font-medium text-gray-900"
+                      >
+                        Organization Code
+                      </label>
+                      <input
+                        type="text"
+                        id="organisation_code"
+                        name="organisation_code"
+                        value={formData.organisation_code}
+                        onChange={handleChange}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Enter organization code"
+                        required
+                      />
                     </div>
                   </div>
                 </div>

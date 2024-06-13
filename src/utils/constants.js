@@ -6,6 +6,8 @@ export const API_ROUTES = {
   CUSTOMERS: `${API_URL}/api/customers`,
   TRIPS: `${API_URL}/api/trip`,
   ROUTES: `${API_URL}/api/routes`,
+  VEHICLES: `${API_URL}/api/vehicles`,
+  ORGANISATIONS: `${API_URL}/api/organisation`,
 };
 
 export const APP_ROUTES = {

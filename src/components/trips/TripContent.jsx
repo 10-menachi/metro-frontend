@@ -20,7 +20,12 @@ const TripContent = ({ trips, customers, routes, sch_page }) => {
           </button>
         </div>
       )}
-      <TripsTable trips={trips} customers={customers} routes={routes} />
+      <TripsTable
+        trips={trips}
+        customers={customers}
+        routes={routes}
+        sch_page={sch_page}
+      />
       <AddTrip isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );

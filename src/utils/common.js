@@ -39,7 +39,7 @@ export async function loginUser(credentials) {
 
 export async function registerEmployee(employeeData) {
   return axios
-    .post(API_ROUTES.ADD_EMPLOYEE, {
+    .post(API_ROUTES.CUSTOMERS, {
       headers: {
         Authorization: getTokenFromLocalStorage(),
       },
@@ -76,8 +76,26 @@ export async function getCustomers() {
   return response.data;
 }
 
+export async function getOrganisations() {
+  const response = await axios.get(API_ROUTES.ORGANISATIONS, {
+    headers: {
+      Authorization: getTokenFromLocalStorage(),
+    },
+  });
+  return response.data;
+}
+
 export async function getRoutes() {
   const response = await axios.get(API_ROUTES.ROUTES, {
+    headers: {
+      Authorization: getTokenFromLocalStorage(),
+    },
+  });
+  return response.data;
+}
+
+export async function getVehicles() {
+  const response = await axios.get(API_ROUTES.VEHICLES, {
     headers: {
       Authorization: getTokenFromLocalStorage(),
     },
@@ -106,4 +124,22 @@ export async function getAuthenticatedUser() {
     console.log("getAuthenticatedUser, Something Went Wrong", err);
     return defaultReturnObject;
   }
+}
+
+export async function addTrip(tripData) {
+  return axios
+    .post(API_ROUTES.TRIPS, tripData, {
+      headers: {
+        Authorization: getTokenFromLocalStorage(),
+      },
+    })
+    .then((response) => {
+      console.log(response);
+      return true;
+    })
+    .catch((error) => {
+      console.log(error);
+      const { data } = error.response;
+      throw new Error(data.message);
+    });
 }
