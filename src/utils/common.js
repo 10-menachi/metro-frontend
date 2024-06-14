@@ -139,13 +139,8 @@ export async function getAuthenticatedUser() {
     if (!token) {
       return defaultReturnObject;
     }
-    const response = await axios({
-      method: "GET",
-      url: API_ROUTES.GET_USER,
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await axiosClient.get("/api/user");
+    console.log("RESPONSE: ", response);
     const user = response.data;
     const authenticated = user ? true : false;
     return { authenticated, user };

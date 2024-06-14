@@ -17,7 +17,14 @@ export const AuthProvider = ({ children }) => {
       setUser(user);
     }
     fetchUser();
-  }, []);
+  }, [
+    setUser,
+    setAuthenticated,
+    getAuthenticatedUser,
+    loginUser,
+    registerUser,
+    navigate,
+  ]);
 
   const login = async (credentials) => {
     try {

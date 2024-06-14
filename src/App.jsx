@@ -18,6 +18,7 @@ import { AuthContext, AuthProvider } from "./context/AuthContext";
 
 const App = () => {
   const { user, authenticated } = useContext(AuthContext);
+  console.log(user, authenticated);
   return (
     <AuthProvider>
       <Routes>
