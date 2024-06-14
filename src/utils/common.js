@@ -6,7 +6,9 @@ export function storeTokenInLocalStorage(token) {
 }
 
 export function getTokenFromLocalStorage() {
-  return localStorage.getItem("token");
+  const token = localStorage.getItem("token");
+  console.log(token);
+  return token;
 }
 
 export async function registerUser(userData) {
