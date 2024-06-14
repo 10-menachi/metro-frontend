@@ -8,6 +8,8 @@ export const API_ROUTES = {
   ROUTES: `${API_URL}/api/routes`,
   VEHICLES: `${API_URL}/api/vehicles`,
   ORGANISATIONS: `${API_URL}/api/organisation`,
+  DRIVERS: `${API_URL}/api/drivers`,
+  ADD_TRIP: `${API_URL}/api/trip`,
 };
 
 export const APP_ROUTES = {

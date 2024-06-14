@@ -7,7 +7,6 @@ export function storeTokenInLocalStorage(token) {
 
 export function getTokenFromLocalStorage() {
   const token = localStorage.getItem("token");
-  console.log(token);
   return token;
 }
 
@@ -46,16 +45,57 @@ export async function loginUser(credentials) {
 }
 
 export async function registerEmployee(employeeData) {
+  const token = getTokenFromLocalStorage().split("|").pop();
   return axios
     .post(API_ROUTES.CUSTOMERS, {
       headers: {
-        Authorization: getTokenFromLocalStorage(),
+        Authorization: `Bearer ${token}`,
       },
       data: employeeData,
     })
     .then((response) => {
       const { user } = response.data;
       console.log("Employee Added Successfully", user);
+      return true;
+    })
+    .catch((error) => {
+      const { data } = error.response;
+      throw new Error(data.message);
+    });
+}
+
+export async function registerDriver(driverData) {
+  const token = getTokenFromLocalStorage().split("|").pop();
+  return axios
+    .post(API_ROUTES.DRIVERS, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: driverData,
+    })
+    .then((response) => {
+      const { user } = response.data;
+      console.log("Driver Added Successfully", user);
+      return true;
+    })
+    .catch((error) => {
+      const { data } = error.response;
+      throw new Error(data.message);
+    });
+}
+
+export async function addVehicle(vehicleData) {
+  const token = getTokenFromLocalStorage().split("|").pop();
+  return axios
+    .post(API_ROUTES.VEHICLES, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: vehicleData,
+    })
+    .then((response) => {
+      const { vehicle } = response.data;
+      console.log("Driver Added Successfully", vehicle);
       return true;
     })
     .catch((error) => {
@@ -134,7 +174,7 @@ export async function getAuthenticatedUser() {
 
 export async function addTrip(tripData) {
   return axios
-    .post(API_ROUTES.TRIPS, tripData, {
+    .post(API_ROUTES.ADD_TRIP, tripData, {
       headers: {
         Authorization: getTokenFromLocalStorage(),
       },
