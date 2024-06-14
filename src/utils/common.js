@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_ROUTES } from "../utils/constants";
+import axiosClient from "./axiosClient";
 
 export function storeTokenInLocalStorage(token) {
   localStorage.setItem("token", token);
@@ -45,17 +46,11 @@ export async function loginUser(credentials) {
 }
 
 export async function registerEmployee(employeeData) {
-  const token = getTokenFromLocalStorage().split("|").pop();
-  return axios
-    .post(API_ROUTES.CUSTOMERS, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      data: employeeData,
-    })
+  return axiosClient
+    .post("/api/customers", employeeData)
     .then((response) => {
-      const { user } = response.data;
-      console.log("Employee Added Successfully", user);
+      const { employee } = response.data;
+      console.log("Employee Added Successfully", employee);
       return true;
     })
     .catch((error) => {
@@ -65,17 +60,11 @@ export async function registerEmployee(employeeData) {
 }
 
 export async function registerDriver(driverData) {
-  const token = getTokenFromLocalStorage().split("|").pop();
-  return axios
-    .post(API_ROUTES.DRIVERS, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      data: driverData,
-    })
+  return axiosClient
+    .post("/api/drivers", driverData)
     .then((response) => {
-      const { user } = response.data;
-      console.log("Driver Added Successfully", user);
+      const { driver } = response.data;
+      console.log("Driver Added Successfully", driver);
       return true;
     })
     .catch((error) => {
@@ -85,17 +74,11 @@ export async function registerDriver(driverData) {
 }
 
 export async function addVehicle(vehicleData) {
-  const token = getTokenFromLocalStorage().split("|").pop();
-  return axios
-    .post(API_ROUTES.VEHICLES, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      data: vehicleData,
-    })
+  return axiosClient
+    .post("/api/vehicles", vehicleData)
     .then((response) => {
       const { vehicle } = response.data;
-      console.log("Driver Added Successfully", vehicle);
+      console.log("Vehicle Added Successfully", vehicle);
       return true;
     })
     .catch((error) => {
