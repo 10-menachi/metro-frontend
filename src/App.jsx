@@ -15,10 +15,10 @@ import CompletedTrips from "./pages/trips/CompletedTrips";
 import SignUp from "./pages/auth/SignUp";
 import SignIn from "./pages/auth/SignIn";
 import { AuthContext, AuthProvider } from "./context/AuthContext";
+import Organisations from "./pages/Organisations";
 
 const App = () => {
   const { user, authenticated } = useContext(AuthContext);
-  console.log(user, authenticated);
   return (
     <AuthProvider>
       <Routes>
@@ -47,6 +47,10 @@ const App = () => {
         <Route
           path={APP_ROUTES.VEHICLES}
           element={<Vehicles user={user} authenticated={authenticated} />}
+        />
+        <Route
+          path={APP_ROUTES.ORGANISATIONS}
+          element={<Organisations user={user} authenticated={authenticated} />}
         />
         <Route
           path={APP_ROUTES.SCHEDULED_TRIPS}

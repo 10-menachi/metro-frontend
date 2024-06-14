@@ -23,6 +23,7 @@ export const APP_ROUTES = {
   EMPLOYEES: "/dashboard/employees",
   DRIVERS: "/dashboard/drivers",
   VEHICLES: "/dashboard/vehicles",
+  ORGANISATIONS: "/dashboard/organisations",
   SCHEDULED_TRIPS: "/dashboard/scheduled-trips",
   COMPLETED_TRIPS: "/dashboard/completed-trips",
 };

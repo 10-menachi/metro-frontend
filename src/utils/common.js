@@ -87,6 +87,21 @@ export async function addVehicle(vehicleData) {
     });
 }
 
+export async function addOrganisation(organisationData) {
+  return axiosClient
+    .post("/api/organisation", organisationData)
+    .then((response) => {
+      console.log(response);
+      const { organisation } = response.data;
+      console.log("Organisation Added Successfully", organisation);
+      return true;
+    })
+    .catch((error) => {
+      const { data } = error.response;
+      throw new Error(data.message);
+    });
+}
+
 export async function getTrips() {
   const trips = await axios.get(API_ROUTES.TRIPS, {
     headers: {
@@ -140,7 +155,6 @@ export async function getAuthenticatedUser() {
       return defaultReturnObject;
     }
     const response = await axiosClient.get("/api/user");
-    console.log("RESPONSE: ", response);
     const user = response.data;
     const authenticated = user ? true : false;
     return { authenticated, user };
