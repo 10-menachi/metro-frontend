@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { APP_ROUTES } from "../utils/constants";
-import Alert from "../components/Alert";
-import RoleSelect from "../components/RoleSelect";
-import { registerUser } from "../utils/common";
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import Alert from "../../components/Alert";
+import RoleSelect from "../../components/RoleSelect";
+import { APP_ROUTES } from "../../utils/constants";
+import { AuthContext } from "../../context/AuthContext";
 
 const SignUp = () => {
   const [userData, setUserData] = useState({});
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const { register } = useContext(AuthContext);
   const [show, setShow] = useState(true);
 
   const handleChange = (e) => {
@@ -18,10 +18,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const success = await registerUser(userData);
-      if (!success) {
-        throw new Error("Registration failed");
-      }
+      await register(userData);
     } catch (error) {
       setError(error.message);
       setShow(true);

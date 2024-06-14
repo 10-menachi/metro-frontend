@@ -23,18 +23,24 @@ export async function registerUser(userData) {
 }
 
 export async function loginUser(credentials) {
-  return axios
-    .post(API_ROUTES.SIGN_IN, credentials)
-    .then((response) => {
-      const { access_token, token_type } = response.data;
-      storeTokenInLocalStorage(`${token_type} ${access_token}`);
-      getAuthenticatedUser();
-      return true;
-    })
-    .catch((error) => {
+  try {
+    const response = await axios.post(API_ROUTES.SIGN_IN, credentials);
+    const { access_token, token_type } = response.data;
+    storeTokenInLocalStorage(`${token_type} ${access_token}`);
+    await getAuthenticatedUser();
+    return true;
+  } catch (error) {
+    if (error.response) {
       const { data } = error.response;
       throw new Error(data.message);
-    });
+    } else if (error.request) {
+      console.error("No response received: ", error.request);
+      throw new Error("No response from the server. Please try again later.");
+    } else {
+      console.error("Error: ", error.message);
+      throw new Error("Network error or server is not responding.");
+    }
+  }
 }
 
 export async function registerEmployee(employeeData) {
@@ -46,13 +52,11 @@ export async function registerEmployee(employeeData) {
       data: employeeData,
     })
     .then((response) => {
-      console.log(response);
       const { user } = response.data;
       console.log("Employee Added Successfully", user);
       return true;
     })
     .catch((error) => {
-      console.log(error);
       const { data } = error.response;
       throw new Error(data.message);
     });
@@ -134,11 +138,9 @@ export async function addTrip(tripData) {
       },
     })
     .then((response) => {
-      console.log(response);
       return true;
     })
     .catch((error) => {
-      console.log(error);
       const { data } = error.response;
       throw new Error(data.message);
     });

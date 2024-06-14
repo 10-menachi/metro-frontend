@@ -2,7 +2,6 @@ import React from "react";
 import Sidebar from "../components/Sidebar";
 import NavBar from "../components/NavBar";
 import Loading from "../components/Loading";
-import { useUser } from "../hooks/useUser";
 import DashboardContent from "../components/DashboardContent";
 
 const Dashboard = ({ user, authenticated }) => {

@@ -1,35 +1,31 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { APP_ROUTES } from "../utils/constants";
-import { loginUser } from "../utils/common";
-import Alert from "../components/Alert";
+import { APP_ROUTES } from "../../utils/constants";
+import Alert from "../../components/Alert";
+import { useAuth } from "../../hooks/useAuth";
 
 const SignIn = () => {
   const [userData, setUserData] = useState({});
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const [show, setShow] = useState(true);
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      loginUser(userData)
-        .then(() => {
-          navigate(APP_ROUTES.DASHBOARD);
-        })
-        .catch((error) => {
-          setError(error.message);
-          setShow(true); // Ensure alert is shown on error
-          setTimeout(() => {
-            setShow(false); // Hide alert after 5 seconds
-          }, 5000);
-        });
+      await login(userData);
+      navigate(APP_ROUTES.DASHBOARD);
     } catch (error) {
-      console.error(error);
+      setError(error.message);
+      setShow(true);
+      setTimeout(() => {
+        setShow(false);
+      }, 5000);
     }
   };
 

@@ -19,10 +19,12 @@ const CompletedTrips = ({ user, authenticated }) => {
     return tripDate < today;
   });
 
+  const { permitted_to } = user;
+
   return (
     <div>
       <NavBar user={user} />
-      <Sidebar />
+      <Sidebar permitted_to={permitted_to} />
       <TripContent
         trips={completedTrips}
         customers={customers}

@@ -1,8 +1,6 @@
-import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { Routes, Route } from "react-router-dom";
 import { APP_ROUTES } from "./utils/constants";
-import SignUp from "./pages/SignUp";
-import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
 import LandingPage from "./pages/LandingPage";
 import NotFound from "./pages/NotFound";
@@ -14,44 +12,51 @@ import Drivers from "./pages/Drivers";
 import Vehicles from "./pages/Vehicles";
 import ScheduledTrips from "./pages/trips/ScheduledTrips";
 import CompletedTrips from "./pages/trips/CompletedTrips";
-import { useUser } from "./hooks/useUser";
+import SignUp from "./pages/auth/SignUp";
+import SignIn from "./pages/auth/SignIn";
+import { AuthContext, AuthProvider } from "./context/AuthContext";
 
 const App = () => {
-  const { user, authenticated } = useUser();
+  const { user, authenticated } = useContext(AuthContext);
   return (
-    <Routes>
-      <Route exact path="/" element={<LandingPage />} />
-      <Route
-        path={APP_ROUTES.PROFILE}
-        element={<Profile user={user} authenticated={authenticated} />}
-      />
-      <Route path={APP_ROUTES.SIGN_UP} exact element={<SignUp />} />
-      <Route path={APP_ROUTES.SIGN_IN} element={<SignIn />} />
-      <Route
-        path={APP_ROUTES.DASHBOARD}
-        element={<Dashboard user={user} authenticated={authenticated} />}
-      />
-      <Route path={APP_ROUTES.NOT_FOUND} element={<NotFound />} />
-      <Route path={APP_ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
-      <Route path={APP_ROUTES.USERS} element={<Users />} />
-      <Route
-        path={APP_ROUTES.EMPLOYEES}
-        element={<Employees user={user} authenticated={authenticated} />}
-      />
-      <Route
-        path={APP_ROUTES.DRIVERS}
-        element={<Drivers user={user} authenticated={authenticated} />}
-      />
-      <Route
-        path={APP_ROUTES.VEHICLES}
-        element={<Vehicles user={user} authenticated={authenticated} />}
-      />
-      <Route
-        path={APP_ROUTES.SCHEDULED_TRIPS}
-        element={<ScheduledTrips user={user} authenticated={authenticated} />}
-      />
-      <Route path={APP_ROUTES.COMPLETED_TRIPS} element={<CompletedTrips />} />
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route exact path="/" element={<LandingPage />} />
+        <Route
+          path={APP_ROUTES.PROFILE}
+          element={<Profile user={user} authenticated={authenticated} />}
+        />
+        <Route path={APP_ROUTES.SIGN_UP} exact element={<SignUp />} />
+        <Route path={APP_ROUTES.SIGN_IN} element={<SignIn />} />
+        <Route
+          path={APP_ROUTES.DASHBOARD}
+          element={<Dashboard user={user} authenticated={authenticated} />}
+        />
+        <Route path={APP_ROUTES.NOT_FOUND} element={<NotFound />} />
+        <Route path={APP_ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
+        <Route path={APP_ROUTES.USERS} element={<Users />} />
+        <Route
+          path={APP_ROUTES.EMPLOYEES}
+          element={<Employees user={user} authenticated={authenticated} />}
+        />
+        <Route
+          path={APP_ROUTES.DRIVERS}
+          element={<Drivers user={user} authenticated={authenticated} />}
+        />
+        <Route
+          path={APP_ROUTES.VEHICLES}
+          element={<Vehicles user={user} authenticated={authenticated} />}
+        />
+        <Route
+          path={APP_ROUTES.SCHEDULED_TRIPS}
+          element={<ScheduledTrips user={user} authenticated={authenticated} />}
+        />
+        <Route
+          path={APP_ROUTES.COMPLETED_TRIPS}
+          element={<CompletedTrips user={user} authenticated={authenticated} />}
+        />
+      </Routes>
+    </AuthProvider>
   );
 };
 

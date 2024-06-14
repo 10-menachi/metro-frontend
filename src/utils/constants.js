@@ -4,7 +4,7 @@ export const API_ROUTES = {
   SIGN_IN: `${API_URL}/api/login`,
   GET_USER: `${API_URL}/api/user`,
   CUSTOMERS: `${API_URL}/api/customers`,
-  TRIPS: `${API_URL}/api/trip`,
+  TRIPS: `${API_URL}/api/trips`,
   ROUTES: `${API_URL}/api/routes`,
   VEHICLES: `${API_URL}/api/vehicles`,
   ORGANISATIONS: `${API_URL}/api/organisation`,
