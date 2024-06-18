@@ -136,7 +136,7 @@ const SchTrips = ({ trips, routes, customers }) => {
                               <Fragment key={idx}>
                                 <tr>
                                   <th colSpan="7" className="bg-gray-100 py-2">
-                                    {pickUpLocation}
+                                    From {pickUpLocation}
                                   </th>
                                 </tr>
                                 {tripsByPickUpLocation[pickUpLocation].map(

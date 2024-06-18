@@ -105,7 +105,7 @@ export async function addOrganisation(organisationData) {
 export async function getTrips() {
   const trips = await axios.get(API_ROUTES.TRIPS, {
     headers: {
-      Authorization: getTokenFromLocalStorage(),
+      Authorization: `Bearer ${getTokenFromLocalStorage()}`,
     },
   });
   return trips.data;
@@ -114,7 +114,7 @@ export async function getTrips() {
 export async function getCustomers() {
   const response = await axios.get(API_ROUTES.CUSTOMERS, {
     headers: {
-      Authorization: getTokenFromLocalStorage(),
+      Authorization: `Bearer ${getTokenFromLocalStorage()}`,
     },
   });
   return response.data;
@@ -123,7 +123,7 @@ export async function getCustomers() {
 export async function getOrganisations() {
   const response = await axios.get(API_ROUTES.ORGANISATIONS, {
     headers: {
-      Authorization: getTokenFromLocalStorage(),
+      Authorization: `Bearer ${getTokenFromLocalStorage()}`,
     },
   });
   return response.data;
@@ -132,7 +132,7 @@ export async function getOrganisations() {
 export async function getRoutes() {
   const response = await axios.get(API_ROUTES.ROUTES, {
     headers: {
-      Authorization: getTokenFromLocalStorage(),
+      Authorization: `Bearer ${getTokenFromLocalStorage()}`,
     },
   });
   return response.data;
@@ -141,7 +141,7 @@ export async function getRoutes() {
 export async function getVehicles() {
   const response = await axios.get(API_ROUTES.VEHICLES, {
     headers: {
-      Authorization: getTokenFromLocalStorage(),
+      Authorization: `Bearer ${getTokenFromLocalStorage()}`,
     },
   });
   return response.data;
@@ -168,7 +168,7 @@ export async function addTrip(tripData) {
   return axios
     .post(API_ROUTES.ADD_TRIP, tripData, {
       headers: {
-        Authorization: getTokenFromLocalStorage(),
+        Authorization: `Bearer ${getTokenFromLocalStorage()}`,
       },
     })
     .then((response) => {
