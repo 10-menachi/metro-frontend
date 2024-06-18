@@ -147,6 +147,15 @@ export async function getVehicles() {
   return response.data;
 }
 
+export async function getDriver(id) {
+  const response = await axios.get(`${API_ROUTES.DRIVERS}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${getTokenFromLocalStorage()}`,
+    },
+  });
+  return response.data.driver;
+}
+
 export async function getAuthenticatedUser() {
   const defaultReturnObject = { authenticated: false, user: null };
   try {

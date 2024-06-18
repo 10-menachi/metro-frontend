@@ -1,6 +1,6 @@
 import React from "react";
 
-const VehicleTableRow = ({ vehicle }) => {
+const VehicleTableRow = ({ vehicle, handleOpen }) => {
   const { model, make, year, plate_number, seats } = vehicle;
 
   return (
@@ -17,7 +17,11 @@ const VehicleTableRow = ({ vehicle }) => {
       <td className="px-6 py-4">{seats}</td>
       <td>
         <div className="flex items-center space-x-4">
-          <button className="text-blue-500 hover:text-blue-600">
+          <button
+            className="text-blue-600 hover:text-blue-900"
+            type="button"
+            onClick={() => handleOpen(vehicle)}
+          >
             <i
               className="fas fa-eye text-white bg-blue-500 p-2 rounded-full hover:bg-blue-600 cursor-pointer"
               data-toggle="tooltip"

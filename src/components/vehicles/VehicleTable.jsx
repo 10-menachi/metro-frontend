@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import VehicleTableRow from "./VehicleTableRow";
+import VehicleDetails from "./VehicleDetails";
 
 const VehicleTable = ({ vehicles }) => {
+  const [isDetailModalOpen, setDetailModalOpen] = useState(false);
+  const [selectedVehicle, setSelectedVehicle] = useState(null);
+
+  const handleOpen = (vehicle) => {
+    setSelectedVehicle(vehicle);
+    setDetailModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setDetailModalOpen(false);
+    setSelectedVehicle(null);
+  };
+
   return (
     <div className="relative overflow-x-auto">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -28,12 +42,22 @@ const VehicleTable = ({ vehicles }) => {
           </tr>
         </thead>
         <tbody>
-          {vehicles.map((vehicle) => {
-            const { id } = vehicle;
-            return <VehicleTableRow key={id} vehicle={vehicle} />;
-          })}
+          {vehicles.map((vehicle) => (
+            <VehicleTableRow
+              key={vehicle.id}
+              vehicle={vehicle}
+              handleOpen={handleOpen}
+            />
+          ))}
         </tbody>
       </table>
+      {isDetailModalOpen && (
+        <VehicleDetails
+          vehicle={selectedVehicle}
+          handleClose={handleClose}
+          isOpen={isDetailModalOpen}
+        />
+      )}
     </div>
   );
 };

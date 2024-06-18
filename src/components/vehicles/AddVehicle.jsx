@@ -118,10 +118,10 @@ const AddVehicle = ({ isOpen, handleClose }) => {
                     </div>
                     <div className="col-span-1 mb-4">
                       <label
-                        htmlFor="phone"
+                        htmlFor="year"
                         className="block mb-2 text-sm font-medium text-gray-900"
                       >
-                        Phone
+                        Year
                       </label>
                       <input
                         type="year"
