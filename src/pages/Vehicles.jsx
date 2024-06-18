@@ -2,7 +2,6 @@ import React from "react";
 import NavBar from "../components/NavBar";
 import Sidebar from "../components/Sidebar";
 import Loading from "../components/Loading";
-import { useUser } from "../hooks/useUser";
 import VehiclesContent from "../components/vehicles/VehicleContent";
 
 const Vehicles = ({ user, authenticated }) => {

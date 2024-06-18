@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { APP_ROUTES } from "../utils/constants";
+import { useAuth } from "../hooks/useAuth";
 
 const NavBar = ({ user }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { logout } = useAuth();
   const { name, email, avatar, address, phone, role } = user || {};
   const logoutUser = () => {
-    console.log("Logging out user");
+    logout();
   };
 
   const toggleDropdown = () => {

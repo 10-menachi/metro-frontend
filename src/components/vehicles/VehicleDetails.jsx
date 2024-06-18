@@ -19,16 +19,26 @@ const VehicleDetails = ({ vehicle, isOpen, handleClose }) => {
 
   useEffect(() => {
     async function fetchDriver() {
+      if (!driver_id) return;
       const driver = await getDriver(driver_id);
       const { user } = driver;
       setDriver(user);
     }
 
     fetchDriver();
-  }, []);
+  }, [driver_id]);
 
   const buttonText = status === "active" ? "Deactivate" : "Activate";
   const buttonColor = status === "active" ? "bg-red-500" : "bg-green-500";
+
+  const changeVehicleStatus = async (status) => {
+    if (!vehicle) return;
+    if (status === "active") {
+      console.log("Deactivating vehicle...", status);
+    } else {
+      console.log("Activating vehicle...", status);
+    }
+  };
 
   return (
     <Transition
@@ -105,7 +115,7 @@ const VehicleDetails = ({ vehicle, isOpen, handleClose }) => {
                     </span>
                     <span>
                       <i className="fa-solid fa-user-tie text-gray-400 text-xl"></i>{" "}
-                      {driver_id ? driver?.name : "No driver assigned"}
+                      {driver_id ? driver?.name : "No driver"}
                     </span>
                   </p>
                 </div>
@@ -114,6 +124,7 @@ const VehicleDetails = ({ vehicle, isOpen, handleClose }) => {
                 <button
                   type="button"
                   className={`w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:ml-3 sm:w-auto sm:text-sm ${buttonColor}`}
+                  onClick={() => changeVehicleStatus(status)}
                 >
                   {buttonText}
                 </button>

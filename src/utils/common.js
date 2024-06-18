@@ -45,6 +45,11 @@ export async function loginUser(credentials) {
   }
 }
 
+export async function logoutUser() {
+  const response = await axiosClient.post("/api/logout");
+  return response.data;
+}
+
 export async function registerEmployee(employeeData) {
   return axiosClient
     .post("/api/customers", employeeData)
@@ -156,6 +161,11 @@ export async function getDriver(id) {
   return response.data.driver;
 }
 
+export async function getVehicle(id) {
+  const response = await axiosClient.get(`/api/vehicles/${id}`);
+  return response.data;
+}
+
 export async function getAuthenticatedUser() {
   const defaultReturnObject = { authenticated: false, user: null };
   try {
@@ -188,3 +198,21 @@ export async function addTrip(tripData) {
       throw new Error(data.message);
     });
 }
+
+export const activateVehicle = async (vehicle) => {
+  if (!vehicle) return;
+  const response = await axiosClient.post(`/api/activate-vehicle/${vehicle}`);
+  return response.data;
+};
+
+export const deactivateVehicle = async (vehicle) => {
+  if (!vehicle) return;
+  try {
+    const response = await axiosClient.post(
+      `/api/deactivate-vehicle/${vehicle}`
+    );
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};

@@ -1,6 +1,11 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuthenticatedUser, loginUser, registerUser } from "../utils/common";
+import {
+  getAuthenticatedUser,
+  loginUser,
+  logoutUser,
+  registerUser,
+} from "../utils/common";
 import { APP_ROUTES } from "../utils/constants";
 
 export const AuthContext = createContext();
@@ -48,10 +53,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    setAuthenticated(false);
-    navigate(APP_ROUTES.LANDING_PAGE);
+  const logout = async () => {
+    try {
+      const response = await logoutUser();
+      if (response) {
+        setUser(null);
+        setAuthenticated(false);
+        navigate(APP_ROUTES.LOGIN);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
