@@ -2,15 +2,27 @@ import React, { useContext, useState } from "react";
 import VehicleTableRow from "../vehicledetails/VehicleTableRow";
 import VehicleDetails from "../vehicledetails/VehicleDetails";
 import { AppContext } from "../../../context/AppContext";
+import EditVehicle from "../vehicledetails/EditVehicle";
 
 const VehicleTable = () => {
   const { vehicles } = useContext(AppContext);
   const [isDetailModalOpen, setDetailModalOpen] = useState(false);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
 
   const handleOpen = (vehicle) => {
     setSelectedVehicle(vehicle);
     setDetailModalOpen(true);
+  };
+
+  const handleEditOpen = (vehicle) => {
+    setSelectedVehicle(vehicle);
+    setEditModalOpen(true);
+  };
+
+  const handleEditClose = () => {
+    setEditModalOpen(false);
+    setSelectedVehicle(null);
   };
 
   const handleClose = () => {
@@ -49,6 +61,7 @@ const VehicleTable = () => {
               key={vehicle.id}
               vehicle={vehicle}
               handleOpen={handleOpen}
+              handleEditOpen={handleEditOpen} // Pass handleEditOpen function
             />
           ))}
         </tbody>
@@ -58,6 +71,14 @@ const VehicleTable = () => {
           vehicle={selectedVehicle}
           handleClose={handleClose}
           isOpen={isDetailModalOpen}
+        />
+      )}
+
+      {isEditModalOpen && (
+        <EditVehicle
+          vehicle={selectedVehicle}
+          handleClose={handleEditClose}
+          isOpen={isEditModalOpen}
         />
       )}
     </div>
