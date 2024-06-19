@@ -237,3 +237,14 @@ export const renewVehicleInsurance = async (id, insuranceData) => {
     return error;
   }
 };
+
+export const assignDriverToVehicle = async (vehicleId, driver_id) => {
+  try {
+    const response = await axiosClient.post(`/api/assign-driver/${vehicleId}`, {
+      driver_id,
+    });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};

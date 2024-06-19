@@ -1,17 +1,19 @@
-import { Transition } from "@headlessui/react";
 import React, { Fragment, useState, useEffect, useContext } from "react";
+import { Transition } from "@headlessui/react";
 import VehicleAvatar from "./VehicleAvatar";
 import RenewInsurance from "./RenewInsurance";
 import {
   activateVehicle,
+  assignDriverToVehicle,
   deactivateVehicle,
   renewVehicleInsurance,
 } from "../../utils/common";
 import { AppContext } from "../../context/AppContext";
+import DriversToAssign from "./DriversToAssign";
 
 const VehicleDetails = ({ vehicle, isOpen, handleClose }) => {
   const [vehicleData, setVehicleData] = useState(vehicle);
-  const { updateVehicle } = useContext(AppContext);
+  const { updateVehicle, drivers } = useContext(AppContext);
   const {
     id,
     model,
@@ -28,6 +30,7 @@ const VehicleDetails = ({ vehicle, isOpen, handleClose }) => {
     vehicle_insurance_expiry,
   } = vehicleData;
 
+  const [isAssignDriverModalOpen, setIsAssignDriverModalOpen] = useState(false);
   const buttonText = status === "active" ? "Deactivate" : "Activate";
   const buttonColor = status === "active" ? "bg-red-500" : "bg-green-500";
 
@@ -77,6 +80,18 @@ const VehicleDetails = ({ vehicle, isOpen, handleClose }) => {
   useEffect(() => {
     setVehicleData(vehicle);
   }, [vehicle]);
+
+  const toggleAssignDriverModal = () => {
+    setIsAssignDriverModalOpen(!isAssignDriverModalOpen);
+  };
+
+  const handleAssignDriver = async (driverId) => {
+    const response = await assignDriverToVehicle(id, driverId);
+    const updatedVehicle = response.vehicle;
+    updateVehicle(id, updatedVehicle);
+    setVehicleData(updatedVehicle);
+    setIsAssignDriverModalOpen(false);
+  };
 
   return (
     <Transition
@@ -248,6 +263,18 @@ const VehicleDetails = ({ vehicle, isOpen, handleClose }) => {
                       )}
                     </>
                   )}
+
+                  {isAssignDriverModalOpen && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                      <div className="bg-white p-5 rounded-lg shadow-lg">
+                        <DriversToAssign
+                          drivers={drivers}
+                          onClose={toggleAssignDriverModal}
+                          handleAssignDriver={handleAssignDriver}
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -263,6 +290,7 @@ const VehicleDetails = ({ vehicle, isOpen, handleClose }) => {
                   <button
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 text-base font-medium text-gray-700 bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    onClick={toggleAssignDriverModal}
                   >
                     Assign Driver
                   </button>
