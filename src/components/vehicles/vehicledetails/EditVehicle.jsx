@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { editVehicle } from "../../../utils/common";
+import { AppContext } from "../../../context/AppContext";
 
 const EditVehicle = ({ vehicle, handleClose }) => {
+  const { updateVehicle } = useContext(AppContext);
   const [formData, setFormData] = useState({
     make: vehicle.make,
     model: vehicle.model,
@@ -20,12 +23,12 @@ const EditVehicle = ({ vehicle, handleClose }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Implement your logic to handle form submission here
-    // Example: Update the vehicle details with formData
-    console.log(formData); // Replace with actual submission logic
-    handleClose(); // Close the modal after submission
+    const response = await editVehicle(vehicle.id, formData);
+    const updatedVehicle = response.vehicle;
+    updateVehicle(vehicle.id, updatedVehicle);
+    handleClose();
   };
 
   return (

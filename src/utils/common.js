@@ -248,3 +248,12 @@ export const assignDriverToVehicle = async (vehicleId, driver_id) => {
     return error;
   }
 };
+
+export const editVehicle = async (id, vehicleData) => {
+  try {
+    const response = await axiosClient.put(`/api/vehicles/${id}`, vehicleData);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};

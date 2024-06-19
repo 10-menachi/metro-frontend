@@ -9,7 +9,6 @@ const Dashboard = ({ user, authenticated }) => {
   if (!authenticated) {
     return <Loading />;
   }
-  console.log(user);
   const { permitted_to } = user;
   return (
     <>
