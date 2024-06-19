@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import Sidebar from "../components/Sidebar";
 import NavBar from "../components/NavBar";
 import Loading from "../components/Loading";
 import DashboardContent from "../components/DashboardContent";
+import { AppContext } from "../context/AppContext";
 
 const Dashboard = ({ user, authenticated }) => {
   if (!authenticated) {
@@ -14,13 +15,7 @@ const Dashboard = ({ user, authenticated }) => {
     <>
       <NavBar user={user} />
       <Sidebar permitted_to={permitted_to} />
-      {permitted_to.includes("view dashboard") && (
-        <DashboardContent
-          employee_count={user.organisation.customers.length}
-          vehicles_count={user.organisation.vehicles.length}
-          drivers_count={user.organisation.drivers.length}
-        />
-      )}
+      {permitted_to.includes("view dashboard") && <DashboardContent />}
     </>
   );
 };

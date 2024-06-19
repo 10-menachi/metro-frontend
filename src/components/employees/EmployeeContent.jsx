@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import EmployeeTable from "./EmployeeTable";
 import EmployeeModal from "./EmployeeModal";
 import AddEmployeeButton from "./AddEmployeeButton";
 import { getOrganisations } from "../../utils/common";
+import { AppContext } from "../../context/AppContext";
 
-const EmployeeContent = ({ user }) => {
-  const { customers } = user.organisation;
-  const [organisations, setOrganisations] = useState([]);
+const EmployeeContent = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { organisations, customers } = useContext(AppContext);
 
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);

@@ -15,7 +15,7 @@ const Drivers = ({ user, authenticated }) => {
     <div>
       <NavBar user={user} />
       <Sidebar permitted_to={permitted_to} />
-      <DriverContent user={user} />
+      <DriverContent />
     </div>
   );
 };

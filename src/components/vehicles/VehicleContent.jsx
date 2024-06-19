@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import AddVehicleButton from "./AddVehicleButton";
 import VehicleTable from "./VehicleTable";
 import AddVehicle from "./AddVehicle";
-const VehiclesContent = ({ user }) => {
-  const { vehicles } = user.organisation;
+import { AppContext } from "../../context/AppContext";
+const VehiclesContent = () => {
+  const { vehicles } = useContext(AppContext);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => setIsOpen(true);

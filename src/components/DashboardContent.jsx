@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import DashboardContentCard from "./DashboardContentCard";
+import { AppContext } from "../context/AppContext";
+import { AuthContext } from "../context/AuthContext";
 
-const DashboardContent = ({
-  employee_count,
-  vehicles_count,
-  drivers_count,
-}) => {
+const DashboardContent = () => {
+  const { user, authenticated } = useContext(AuthContext);
+  const { customers, vehicles, organisations, drivers } =
+    useContext(AppContext);
+  const isAdmin = user.roles.some((role) => role.name === "admin");
   return (
     <div className="p-4 py-20 sm:ml-64">
       <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
@@ -13,18 +15,25 @@ const DashboardContent = ({
           <DashboardContentCard
             icon="users"
             title="Employees"
-            count={employee_count}
+            count={customers.length}
           />
           <DashboardContentCard
             icon="car"
             title="Vehicles"
-            count={vehicles_count}
+            count={vehicles.length}
           />
           <DashboardContentCard
             icon="id-card"
             title="Drivers"
-            count={drivers_count}
+            count={drivers.length}
           />
+          {isAdmin && (
+            <DashboardContentCard
+              icon="building"
+              title="Organisations"
+              count={organisations.length}
+            />
+          )}
         </div>
       </div>
     </div>

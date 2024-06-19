@@ -15,7 +15,7 @@ const Employees = ({ user, authenticated }) => {
     <div>
       <NavBar user={user} />
       <Sidebar permitted_to={permitted_to} />
-      <EmployeeContent user={user} />
+      <EmployeeContent />
     </div>
   );
 };

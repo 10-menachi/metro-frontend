@@ -134,8 +134,8 @@ export async function getOrganisations() {
   return response.data;
 }
 
-export async function getRoutes() {
-  const response = await axios.get(API_ROUTES.ROUTES, {
+export async function getVehicles() {
+  const response = await axios.get(API_ROUTES.VEHICLES, {
     headers: {
       Authorization: `Bearer ${getTokenFromLocalStorage()}`,
     },
@@ -143,8 +143,17 @@ export async function getRoutes() {
   return response.data;
 }
 
-export async function getVehicles() {
-  const response = await axios.get(API_ROUTES.VEHICLES, {
+export async function getDrivers() {
+  const response = await axios.get(API_ROUTES.DRIVERS, {
+    headers: {
+      Authorization: `Bearer ${getTokenFromLocalStorage()}`,
+    },
+  });
+  return response.data;
+}
+
+export async function getRoutes() {
+  const response = await axios.get(API_ROUTES.ROUTES, {
     headers: {
       Authorization: `Bearer ${getTokenFromLocalStorage()}`,
     },

@@ -14,7 +14,7 @@ const Organisations = ({ user, authenticated }) => {
     <div>
       <NavBar user={user} />
       <Sidebar permitted_to={permitted_to} />
-      <OrganisationContent user={user} />
+      <OrganisationContent />
     </div>
   );
 };

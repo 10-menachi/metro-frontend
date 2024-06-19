@@ -7,6 +7,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import { StateProvider } from "./context/AddTripContext.jsx";
 import { TripsProvider } from "./context/TripsContext.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
+import { AppProvider } from "./context/AppContext.jsx";
 
 const root = document.getElementById("root");
 const rootElement = root ? ReactDOM.createRoot(root) : ReactDOM;
@@ -17,7 +18,9 @@ rootElement.render(
       <AuthProvider>
         <TripsProvider>
           <StateProvider>
-            <App />
+            <AppProvider>
+              <App />
+            </AppProvider>
           </StateProvider>
         </TripsProvider>
       </AuthProvider>
