@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import VehicleTableRow from "./VehicleTableRow";
 import VehicleDetails from "./VehicleDetails";
+import { AppContext } from "../../context/AppContext";
 
-const VehicleTable = ({ vehicles }) => {
+const VehicleTable = () => {
+  const { vehicles } = useContext(AppContext);
   const [isDetailModalOpen, setDetailModalOpen] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
 

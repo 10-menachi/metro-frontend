@@ -36,9 +36,17 @@ export const AppProvider = ({ children }) => {
     fetchData();
   }, []);
 
+  const updateVehicle = (id, newData) => {
+    setVehicles(
+      vehicles.map((vehicle) =>
+        vehicle.id === id ? { ...vehicle, ...newData } : vehicle
+      )
+    );
+  };
+
   return (
     <AppContext.Provider
-      value={{ customers, organisations, vehicles, drivers }}
+      value={{ customers, organisations, vehicles, drivers, updateVehicle }}
     >
       {children}
     </AppContext.Provider>
