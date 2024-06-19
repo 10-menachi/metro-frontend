@@ -2,7 +2,11 @@ import { Transition } from "@headlessui/react";
 import React, { Fragment, useState, useEffect, useContext } from "react";
 import VehicleAvatar from "./VehicleAvatar";
 import RenewInsurance from "./RenewInsurance";
-import { activateVehicle, deactivateVehicle } from "../../utils/common";
+import {
+  activateVehicle,
+  deactivateVehicle,
+  renewVehicleInsurance,
+} from "../../utils/common";
 import { AppContext } from "../../context/AppContext";
 
 const VehicleDetails = ({ vehicle, isOpen, handleClose }) => {
@@ -44,18 +48,21 @@ const VehicleDetails = ({ vehicle, isOpen, handleClose }) => {
 
   const [showRenewModal, setShowRenewModal] = useState(false);
   const [renewFormData, setRenewFormData] = useState({
-    organisation: "",
-    startDate: "",
-    endDate: "",
+    vehicle_insurance_issue_organisation: "",
+    vehicle_insurance_issue_date: "",
+    vehicle_insurance_expiry: "",
   });
 
   const handleRenewButtonClick = () => {
     setShowRenewModal(true);
   };
 
-  const handleRenewFormSubmit = (e) => {
+  const handleRenewFormSubmit = async (e) => {
     e.preventDefault();
-    console.log("Renew Insurance Form Submitted:", renewFormData);
+    const response = await renewVehicleInsurance(id, renewFormData);
+    const updatedVehicle = response.vehicle;
+    updateVehicle(id, updatedVehicle);
+    setVehicleData(updatedVehicle);
     setShowRenewModal(false);
   };
 

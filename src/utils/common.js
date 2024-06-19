@@ -225,3 +225,15 @@ export const deactivateVehicle = async (vehicle) => {
     return error;
   }
 };
+
+export const renewVehicleInsurance = async (id, insuranceData) => {
+  try {
+    const response = await axiosClient.put(
+      `/api/insurances/${id}`,
+      insuranceData
+    );
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
