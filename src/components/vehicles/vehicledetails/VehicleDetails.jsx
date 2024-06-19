@@ -7,8 +7,8 @@ import {
   assignDriverToVehicle,
   deactivateVehicle,
   renewVehicleInsurance,
-} from "../../utils/common";
-import { AppContext } from "../../context/AppContext";
+} from "../../../utils/common";
+import { AppContext } from "../../../context/AppContext";
 import DriversToAssign from "./DriversToAssign";
 
 const VehicleDetails = ({ vehicle, isOpen, handleClose }) => {

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import VehicleTableRow from "./VehicleTableRow";
-import VehicleDetails from "./VehicleDetails";
-import { AppContext } from "../../context/AppContext";
+import VehicleTableRow from "../vehicledetails/VehicleTableRow";
+import VehicleDetails from "../vehicledetails/VehicleDetails";
+import { AppContext } from "../../../context/AppContext";
 
 const VehicleTable = () => {
   const { vehicles } = useContext(AppContext);

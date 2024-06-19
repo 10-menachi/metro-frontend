@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
-import AddVehicleButton from "./AddVehicleButton";
+import AddVehicleButton from "../addvehicle/AddVehicleButton";
 import VehicleTable from "./VehicleTable";
-import AddVehicle from "./AddVehicle";
-import { AppContext } from "../../context/AppContext";
+import AddVehicle from "../addvehicle/AddVehicle";
+import { AppContext } from "../../../context/AppContext";
 const VehiclesContent = () => {
   const { vehicles } = useContext(AppContext);
   const [isOpen, setIsOpen] = useState(false);

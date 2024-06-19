@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Transition, TransitionChild } from "@headlessui/react";
-import { addVehicle, registerDriver } from "../../utils/common";
+import { addVehicle } from "../../../utils/common";
 
 const AddVehicle = ({ isOpen, handleClose }) => {
   const [formData, setFormData] = useState({
