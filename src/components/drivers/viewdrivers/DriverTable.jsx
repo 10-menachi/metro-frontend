@@ -17,11 +17,6 @@ const DriverTable = ({ drivers }) => {
     });
   };
 
-  const handleRenewFormSubmit = (e) => {
-    e.preventDefault();
-    console.log(renewFormData);
-  };
-
   const handleDetailsModalOpen = (driver) => {
     setDetailsModalOpen(true);
     setSelectedDriver(driver);
@@ -71,7 +66,6 @@ const DriverTable = ({ drivers }) => {
           handleClose={handleDetailsModalClose}
           driver={selectedDriver}
           renewFormData={renewFormData}
-          handleRenewFormSubmit={handleRenewFormSubmit}
           handleInputChange={handleInputChange}
         />
       )}

@@ -1,16 +1,13 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import DriverAvatar from "./DriverAvatar";
 import { Transition } from "@headlessui/react";
 import RenewLicense from "./RenewLicense";
+import { renewDriversLicense } from "../../../utils/driverUtils";
+import { DriverContext } from "../../../context/DriverContext";
 
-const ViewDriverDetails = ({
-  isOpen,
-  handleClose,
-  driver,
-  handleRenewFormSubmit,
-  renewFormData,
-  handleInputChange,
-}) => {
+const ViewDriverDetails = ({ isOpen, handleClose, driver }) => {
+  const [driverData, setDriverData] = useState(driver);
+  const { updateDriver } = useContext(DriverContext);
   const { name, address } = driver.user;
   const {
     driving_license_date_issued,
@@ -18,13 +15,36 @@ const ViewDriverDetails = ({
     driving_license_date_expiry,
     national_id_no,
     status,
-  } = driver;
+  } = driverData;
   const [showRenewModal, setShowRenewModal] = useState(false);
+  const [renewFormData, setRenewFormData] = useState({
+    startDate: "",
+    endDate: "",
+  });
+
   const buttonText = status === "active" ? "Deactivate" : "Activate";
   const buttonColor = status === "active" ? "bg-red-500" : "bg-green-500";
 
   const changeDriverStatus = (status) => {
     console.log(status);
+  };
+
+  const handleRenewButtonClick = () => {
+    setShowRenewModal(true);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setRenewFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleRenewFormSubmit = async (e) => {
+    e.preventDefault();
+    const response = await renewDriversLicense(driver.id, renewFormData);
+    const updatedDriver = response.driver;
+    setDriverData(updatedDriver);
+    updateDriver(driver.id, updatedDriver);
+    setShowRenewModal(false);
   };
 
   return (
@@ -145,7 +165,7 @@ const ViewDriverDetails = ({
                           new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) && (
                           <button
                             className="ml-2 bg-red-500 text-white text-xs font-semibold px-2.5 py-0.5 rounded"
-                            onClick={() => setShowRenewModal(true)}
+                            onClick={handleRenewButtonClick}
                           >
                             Renew
                           </button>

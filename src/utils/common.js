@@ -64,20 +64,6 @@ export async function registerEmployee(employeeData) {
     });
 }
 
-export async function registerDriver(driverData) {
-  return axiosClient
-    .post("/api/drivers", driverData)
-    .then((response) => {
-      const { driver } = response.data;
-      console.log("Driver Added Successfully", driver);
-      return true;
-    })
-    .catch((error) => {
-      const { data } = error.response;
-      throw new Error(data.message);
-    });
-}
-
 export async function addOrganisation(organisationData) {
   return axiosClient
     .post("/api/organisation", organisationData)
@@ -120,15 +106,6 @@ export async function getOrganisations() {
   return response.data;
 }
 
-export async function getDrivers() {
-  const response = await axios.get(API_ROUTES.DRIVERS, {
-    headers: {
-      Authorization: `Bearer ${getTokenFromLocalStorage()}`,
-    },
-  });
-  return response.data;
-}
-
 export async function getRoutes() {
   const response = await axios.get(API_ROUTES.ROUTES, {
     headers: {
@@ -136,15 +113,6 @@ export async function getRoutes() {
     },
   });
   return response.data;
-}
-
-export async function getDriver(id) {
-  const response = await axios.get(`${API_ROUTES.DRIVERS}/${id}`, {
-    headers: {
-      Authorization: `Bearer ${getTokenFromLocalStorage()}`,
-    },
-  });
-  return response.data.driver;
 }
 
 export async function getAuthenticatedUser() {
