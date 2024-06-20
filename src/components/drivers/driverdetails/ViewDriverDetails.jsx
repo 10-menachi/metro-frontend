@@ -2,7 +2,10 @@ import React, { Fragment, useContext, useState } from "react";
 import DriverAvatar from "./DriverAvatar";
 import { Transition } from "@headlessui/react";
 import RenewLicense from "./RenewLicense";
-import { renewDriversLicense } from "../../../utils/driverUtils";
+import {
+  activateDriver,
+  renewDriversLicense,
+} from "../../../utils/driverUtils";
 import { DriverContext } from "../../../context/DriverContext";
 
 const ViewDriverDetails = ({ isOpen, handleClose, driver }) => {
@@ -25,8 +28,15 @@ const ViewDriverDetails = ({ isOpen, handleClose, driver }) => {
   const buttonText = status === "active" ? "Deactivate" : "Activate";
   const buttonColor = status === "active" ? "bg-red-500" : "bg-green-500";
 
-  const changeDriverStatus = (status) => {
-    console.log(status);
+  const changeDriverStatus = async (status) => {
+    if (status === "active") {
+      console.log("Deactivate driver with id: ", driver.id);
+    } else {
+      const response = await activateDriver(driver.id);
+      const updatedDriver = response.driver;
+      setDriverData(updatedDriver);
+      updateDriver(driver.id, updatedDriver);
+    }
   };
 
   const handleRenewButtonClick = () => {

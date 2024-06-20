@@ -42,3 +42,8 @@ export async function renewDriversLicense(id, renewData) {
   );
   return response.data;
 }
+
+export async function activateDriver(id) {
+  const response = await axiosClient.post(`/api/activate-driver/${id}`);
+  return response.data;
+}
