@@ -1,6 +1,37 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const VehicleAvatar = ({ imageUrl, status }) => {
+  const [vehicleImage, setVehicleImage] = useState(null);
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      if (imageUrl) {
+        try {
+          const link = `${
+            import.meta.env.VITE_API_URL
+          }/vehicles-avatar/${imageUrl}`;
+          const response = await axios.get(link, { responseType: "blob" });
+
+          // Assuming you want to display the fetched image directly
+          const url = URL.createObjectURL(response.data);
+          setVehicleImage(url);
+        } catch (error) {
+          console.error("Error fetching vehicle avatar:", error);
+          setVehicleImage(null); // Reset image state on error
+        }
+      }
+    };
+
+    fetchImage();
+
+    return () => {
+      if (vehicleImage) {
+        URL.revokeObjectURL(vehicleImage); // Clean up object URL on unmount
+      }
+    };
+  }, [imageUrl]);
+
   const anonymousVehicleSvg = (
     <svg
       className="absolute w-16 h-16 text-gray-400 p-2"
@@ -24,10 +55,10 @@ const VehicleAvatar = ({ imageUrl, status }) => {
     <div
       className={`relative w-16 h-16 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 ring-2 ${ringColorClass}`}
     >
-      {imageUrl ? (
+      {vehicleImage ? (
         <img
           className="object-cover w-full h-full rounded-full"
-          src={imageUrl}
+          src={vehicleImage}
           alt="Vehicle avatar"
         />
       ) : (

@@ -28,6 +28,7 @@ const VehicleDetails = ({ vehicle, isOpen, handleClose }) => {
     vehicle_insurance_issue_date,
     vehicle_insurance_issue_organisation,
     vehicle_insurance_expiry,
+    vehicle_avatar,
   } = vehicleData;
 
   const [isAssignDriverModalOpen, setIsAssignDriverModalOpen] = useState(false);
@@ -148,7 +149,7 @@ const VehicleDetails = ({ vehicle, isOpen, handleClose }) => {
                   >
                     <i className="fas fa-times text-white text-2xl"></i>
                   </span>
-                  <VehicleAvatar status={status} />
+                  <VehicleAvatar imageUrl={vehicle_avatar} status={status} />
                   <p className="text-md text-white text-xl font-bold">
                     {make} {model}, {year}, {color}
                   </p>
