@@ -88,10 +88,17 @@ const VehicleDetails = ({ vehicle, isOpen, handleClose }) => {
 
   const handleAssignDriver = async (driverId) => {
     const response = await assignDriverToVehicle(id, driverId);
-    const updatedVehicle = response.vehicle;
-    updateVehicle(id, updatedVehicle);
-    setVehicleData(updatedVehicle);
-    setIsAssignDriverModalOpen(false);
+    if (response.vehicle) {
+      console.log(response.vehicle);
+      const updatedVehicle = response.vehicle;
+      updateVehicle(id, updatedVehicle);
+      setVehicleData(updatedVehicle);
+      setIsAssignDriverModalOpen(false);
+    }
+    if (response.response.status && response.response.status === 400) {
+      alert(response.response.data.error);
+      setIsAssignDriverModalOpen(false);
+    }
   };
 
   return (
@@ -169,7 +176,7 @@ const VehicleDetails = ({ vehicle, isOpen, handleClose }) => {
                     </span>
                     <span>
                       <i className="fa-solid fa-user-tie text-gray-400 text-xl"></i>{" "}
-                      {driver ? driver.name : "No driver"}
+                      {driver ? driver.user.name : "No driver"}
                     </span>
                   </p>
                   {vehicle_insurance_issue_date ? (

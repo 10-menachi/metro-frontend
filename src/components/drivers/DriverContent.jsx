@@ -6,6 +6,7 @@ import { AppContext } from "../../context/AppContext";
 
 const DriverContent = () => {
   const { drivers } = useContext(AppContext);
+  console.log(drivers);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => setIsOpen(true);
