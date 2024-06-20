@@ -1,7 +1,7 @@
 import React from "react";
 
-const DriverTableRow = ({ driver }) => {
-  const { name, email, phone, address } = driver;
+const DriverTableRow = ({ driver, handleDetailsModalOpen }) => {
+  const { name, email, phone, address } = driver.user;
   return (
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
       <th
@@ -20,6 +20,7 @@ const DriverTableRow = ({ driver }) => {
               className="fas fa-eye text-white bg-blue-500 p-2 rounded-full hover:bg-blue-600 cursor-pointer"
               data-toggle="tooltip"
               title="View"
+              onClick={() => handleDetailsModalOpen(driver)}
             ></i>
           </button>
           <button className="text-indigo-600 hover:text-indigo-900">

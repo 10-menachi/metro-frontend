@@ -1,12 +1,11 @@
 import React, { useContext, useState } from "react";
-import AddDriverButton from "./AddDriverButton";
-import DriverTable from "./DriverTable";
-import AddDriver from "./AddDriver";
-import { AppContext } from "../../context/AppContext";
+import DriverTable from "../viewdrivers/DriverTable";
+import AddDriver from "../adddriver/AddDriver";
+import AddDriverButton from "../adddriver/AddDriverButton";
+import { AppContext } from "../../../context/AppContext";
 
 const DriverContent = () => {
   const { drivers } = useContext(AppContext);
-  console.log(drivers);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => setIsOpen(true);

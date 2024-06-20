@@ -2,8 +2,7 @@ import React from "react";
 import NavBar from "../components/NavBar";
 import Sidebar from "../components/Sidebar";
 import Loading from "../components/Loading";
-import { useUser } from "../hooks/useUser";
-import DriverContent from "../components/drivers/DriverContent";
+import DriverContent from "../components/drivers/viewdrivers/DriverContent";
 
 const Drivers = ({ user, authenticated }) => {
   if (!authenticated) {
