@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import TripTableRow from "./TripTableRow";
-import { getVehicles } from "../../utils/common";
+import { getVehicles } from "../../utils/vehicleUtils";
 
 const SchTrips = ({ trips, routes, customers }) => {
   const [vehicles, setVehicles] = useState([]);

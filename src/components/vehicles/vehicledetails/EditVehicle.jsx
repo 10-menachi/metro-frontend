@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import { editVehicle } from "../../../utils/common";
 import { AppContext } from "../../../context/AppContext";
+import { editVehicle } from "../../../utils/vehicleUtils";
 
 const EditVehicle = ({ vehicle, handleClose }) => {
   const { updateVehicle } = useContext(AppContext);

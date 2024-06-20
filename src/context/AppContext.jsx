@@ -1,10 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
-import {
-  getCustomers,
-  getDrivers,
-  getOrganisations,
-  getVehicles,
-} from "../utils/common";
+import { getCustomers, getDrivers, getOrganisations } from "../utils/common";
+import { getVehicles } from "../utils/vehicleUtils";
 
 export const AppContext = createContext();
 
@@ -44,9 +40,25 @@ export const AppProvider = ({ children }) => {
     );
   };
 
+  const deleteVehicle = (id) => {
+    setVehicles(vehicles.filter((vehicle) => vehicle.id !== id));
+  };
+
+  const addVehicleToState = (vehicle) => {
+    setVehicles([...vehicles, vehicle]);
+  };
+
   return (
     <AppContext.Provider
-      value={{ customers, organisations, vehicles, drivers, updateVehicle }}
+      value={{
+        customers,
+        organisations,
+        vehicles,
+        drivers,
+        updateVehicle,
+        deleteVehicle,
+        addVehicleToState,
+      }}
     >
       {children}
     </AppContext.Provider>

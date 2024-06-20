@@ -1,6 +1,11 @@
 import React from "react";
 
-const VehicleTableRow = ({ vehicle, handleOpen, handleEditOpen }) => {
+const VehicleTableRow = ({
+  vehicle,
+  handleOpen,
+  handleEditOpen,
+  handleDeleteOpen,
+}) => {
   const { model, make, year, plate_number, seats } = vehicle;
 
   return (
@@ -38,7 +43,10 @@ const VehicleTableRow = ({ vehicle, handleOpen, handleEditOpen }) => {
               title="Edit"
             ></i>
           </button>
-          <button className="text-red-600 hover:text-red-900">
+          <button
+            className="text-red-600 hover:text-red-900"
+            onClick={() => handleDeleteOpen(vehicle)}
+          >
             <i
               className="fas fa-trash text-white bg-red-600 p-2 rounded-full hover:bg-red-900 cursor-pointer"
               data-toggle="tooltip"

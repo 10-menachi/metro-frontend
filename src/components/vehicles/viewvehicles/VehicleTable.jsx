@@ -3,12 +3,16 @@ import VehicleTableRow from "../vehicledetails/VehicleTableRow";
 import VehicleDetails from "../vehicledetails/VehicleDetails";
 import { AppContext } from "../../../context/AppContext";
 import EditVehicle from "../vehicledetails/EditVehicle";
+import DeleteVehicle from "../vehicledetails/DeleteVehicle";
+import { deleteVehicleFromApi } from "../../../utils/vehicleUtils";
 
 const VehicleTable = () => {
   const { vehicles } = useContext(AppContext);
   const [isDetailModalOpen, setDetailModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
+  const { deleteVehicle } = useContext(AppContext);
 
   const handleOpen = (vehicle) => {
     setSelectedVehicle(vehicle);
@@ -20,6 +24,16 @@ const VehicleTable = () => {
     setEditModalOpen(true);
   };
 
+  const handleDeleteOpen = (vehicle) => {
+    setSelectedVehicle(vehicle);
+    setDeleteModalOpen(true);
+  };
+
+  const handleDeteteClose = () => {
+    setDeleteModalOpen(false);
+    setSelectedVehicle(null);
+  };
+
   const handleEditClose = () => {
     setEditModalOpen(false);
     setSelectedVehicle(null);
@@ -27,6 +41,14 @@ const VehicleTable = () => {
 
   const handleClose = () => {
     setDetailModalOpen(false);
+    setSelectedVehicle(null);
+  };
+
+  const handleDeteteVehicle = async (id) => {
+    const response = await deleteVehicleFromApi(id);
+    console.log(response);
+    deleteVehicle(id);
+    setDeleteModalOpen(false);
     setSelectedVehicle(null);
   };
 
@@ -61,7 +83,8 @@ const VehicleTable = () => {
               key={vehicle.id}
               vehicle={vehicle}
               handleOpen={handleOpen}
-              handleEditOpen={handleEditOpen} // Pass handleEditOpen function
+              handleEditOpen={handleEditOpen}
+              handleDeleteOpen={handleDeleteOpen}
             />
           ))}
         </tbody>
@@ -79,6 +102,15 @@ const VehicleTable = () => {
           vehicle={selectedVehicle}
           handleClose={handleEditClose}
           isOpen={isEditModalOpen}
+        />
+      )}
+
+      {isDeleteModalOpen && (
+        <DeleteVehicle
+          vehicle={selectedVehicle}
+          handleClose={handleDeteteClose}
+          isOpen={isDeleteModalOpen}
+          handleDeleteVehicle={handleDeteteVehicle}
         />
       )}
     </div>

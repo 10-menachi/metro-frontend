@@ -1,6 +1,7 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import { Transition, TransitionChild } from "@headlessui/react";
-import { addVehicle } from "../../../utils/common";
+import { addVehicle } from "../../../utils/vehicleUtils";
+import { AppContext } from "../../../context/AppContext";
 
 const AddVehicle = ({ isOpen, handleClose }) => {
   const [formData, setFormData] = useState({
@@ -12,18 +13,33 @@ const AddVehicle = ({ isOpen, handleClose }) => {
     seats: "",
     fuel_type: "",
     engine_size: "",
+    vehicle_avatar: null,
   });
+  const [error, setError] = useState(null);
+  const { addVehicleToState } = useContext(AppContext);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, files } = e.target;
+    if (name === "vehicle_avatar") {
+      setFormData({ ...formData, [name]: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const isVehicleAdded = await addVehicle(formData);
-    if (isVehicleAdded) {
+
+    const form = new FormData();
+    for (const key in formData) {
+      form.append(key, formData[key]);
+    }
+    try {
+      const vehicle = await addVehicle(form);
+      addVehicleToState(vehicle);
       handleClose();
-      window.location.reload();
+    } catch (error) {
+      setError(error.message);
     }
   };
 
@@ -74,7 +90,16 @@ const AddVehicle = ({ isOpen, handleClose }) => {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-2xl sm:w-full">
-              <form onSubmit={handleSubmit} className="w-full">
+              <form
+                onSubmit={handleSubmit}
+                className="w-full"
+                encType="multipart/form-data"
+              >
+                {error && (
+                  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                    {error}
+                  </div>
+                )}
                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <h2 className="text-xl font-bold text-gray-900 mb-4">
                     Add Vehicle
@@ -100,7 +125,7 @@ const AddVehicle = ({ isOpen, handleClose }) => {
                     </div>
                     <div className="col-span-1 mb-4">
                       <label
-                        htmlFor="email"
+                        htmlFor="model"
                         className="block mb-2 text-sm font-medium text-gray-900"
                       >
                         Model
@@ -124,7 +149,7 @@ const AddVehicle = ({ isOpen, handleClose }) => {
                         Year
                       </label>
                       <input
-                        type="year"
+                        type="number"
                         id="year"
                         name="year"
                         value={formData.year}
@@ -134,7 +159,7 @@ const AddVehicle = ({ isOpen, handleClose }) => {
                         required
                       />
                     </div>
-                    <div className="col-span-1 mb-4 relative">
+                    <div className="col-span-1 mb-4">
                       <label
                         htmlFor="color"
                         className="block mb-2 text-sm font-medium text-gray-900"
@@ -147,14 +172,14 @@ const AddVehicle = ({ isOpen, handleClose }) => {
                         name="color"
                         value={formData.color}
                         onChange={handleChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Color"
                         required
                       />
                     </div>
-                    <div className="col-span-1 mb-4 relative">
+                    <div className="col-span-1 mb-4">
                       <label
-                        htmlFor="color"
+                        htmlFor="plate_number"
                         className="block mb-2 text-sm font-medium text-gray-900"
                       >
                         Plate Number
@@ -165,14 +190,14 @@ const AddVehicle = ({ isOpen, handleClose }) => {
                         name="plate_number"
                         value={formData.plate_number}
                         onChange={handleChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Plate Number"
                         required
                       />
                     </div>
-                    <div className="col-span-1 mb-4 relative">
+                    <div className="col-span-1 mb-4">
                       <label
-                        htmlFor="color"
+                        htmlFor="seats"
                         className="block mb-2 text-sm font-medium text-gray-900"
                       >
                         Seats
@@ -183,12 +208,12 @@ const AddVehicle = ({ isOpen, handleClose }) => {
                         name="seats"
                         value={formData.seats}
                         onChange={handleChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Seats"
                         required
                       />
                     </div>
-                    <div className="col-span-1 mb-4 relative">
+                    <div className="col-span-1 mb-4">
                       <label
                         htmlFor="fuel_type"
                         className="block mb-2 text-sm font-medium text-gray-900"
@@ -201,14 +226,14 @@ const AddVehicle = ({ isOpen, handleClose }) => {
                         name="fuel_type"
                         value={formData.fuel_type}
                         onChange={handleChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Fuel Type"
                         required
                       />
                     </div>
-                    <div className="col-span-1 mb-4 relative">
+                    <div className="col-span-1 mb-4">
                       <label
-                        htmlFor="color"
+                        htmlFor="engine_size"
                         className="block mb-2 text-sm font-medium text-gray-900"
                       >
                         Engine Size
@@ -219,9 +244,24 @@ const AddVehicle = ({ isOpen, handleClose }) => {
                         name="engine_size"
                         value={formData.engine_size}
                         onChange={handleChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Engine Size"
                         required
+                      />
+                    </div>
+                    <div className="col-span-2 mb-4">
+                      <label
+                        htmlFor="vehicle_avatar"
+                        className="block mb-2 text-sm font-medium text-gray-900"
+                      >
+                        Vehicle Avatar
+                      </label>
+                      <input
+                        type="file"
+                        id="vehicle_avatar"
+                        name="vehicle_avatar"
+                        onChange={handleChange}
+                        className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                       />
                     </div>
                   </div>
@@ -229,8 +269,7 @@ const AddVehicle = ({ isOpen, handleClose }) => {
                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                   <button
                     type="submit"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus
-                    :ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
                   >
                     Submit
                   </button>

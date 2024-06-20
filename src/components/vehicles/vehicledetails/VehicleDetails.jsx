@@ -2,14 +2,14 @@ import React, { Fragment, useState, useEffect, useContext } from "react";
 import { Transition } from "@headlessui/react";
 import VehicleAvatar from "./VehicleAvatar";
 import RenewInsurance from "./RenewInsurance";
+import { AppContext } from "../../../context/AppContext";
+import DriversToAssign from "./DriversToAssign";
 import {
   activateVehicle,
   assignDriverToVehicle,
   deactivateVehicle,
-  renewVehicleInsurance,
-} from "../../../utils/common";
-import { AppContext } from "../../../context/AppContext";
-import DriversToAssign from "./DriversToAssign";
+} from "../../../utils/vehicleUtils";
+import { renewVehicleInsurance } from "../../../utils/common";
 
 const VehicleDetails = ({ vehicle, isOpen, handleClose }) => {
   const [vehicleData, setVehicleData] = useState(vehicle);
