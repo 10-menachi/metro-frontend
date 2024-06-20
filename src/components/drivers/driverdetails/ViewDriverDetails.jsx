@@ -4,6 +4,7 @@ import { Transition } from "@headlessui/react";
 import RenewLicense from "./RenewLicense";
 import {
   activateDriver,
+  deactivateDriver,
   renewDriversLicense,
 } from "../../../utils/driverUtils";
 import { DriverContext } from "../../../context/DriverContext";
@@ -30,7 +31,10 @@ const ViewDriverDetails = ({ isOpen, handleClose, driver }) => {
 
   const changeDriverStatus = async (status) => {
     if (status === "active") {
-      console.log("Deactivate driver with id: ", driver.id);
+      const response = await deactivateDriver(driver.id);
+      const updatedDriver = response.driver;
+      setDriverData(updatedDriver);
+      updateDriver(driver.id, updatedDriver);
     } else {
       const response = await activateDriver(driver.id);
       const updatedDriver = response.driver;

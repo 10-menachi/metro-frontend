@@ -47,3 +47,8 @@ export async function activateDriver(id) {
   const response = await axiosClient.post(`/api/activate-driver/${id}`);
   return response.data;
 }
+
+export async function deactivateDriver(id) {
+  const response = await axiosClient.post(`/api/deactivate-driver/${id}`);
+  return response.data;
+}
