@@ -14,7 +14,7 @@ const Vehicles = ({ user, authenticated }) => {
     <div>
       <NavBar user={user} />
       <Sidebar permitted_to={permitted_to} />
-      <VehiclesContent user={user} />
+      <VehiclesContent />
     </div>
   );
 };

@@ -8,6 +8,7 @@ import { StateProvider } from "./context/AddTripContext.jsx";
 import { TripsProvider } from "./context/TripsContext.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { AppProvider } from "./context/AppContext.jsx";
+import { VehicleProvider } from "./context/VehicleContext.jsx";
 
 const root = document.getElementById("root");
 const rootElement = root ? ReactDOM.createRoot(root) : ReactDOM;
@@ -19,7 +20,9 @@ rootElement.render(
         <TripsProvider>
           <StateProvider>
             <AppProvider>
-              <App />
+              <VehicleProvider>
+                <App />
+              </VehicleProvider>
             </AppProvider>
           </StateProvider>
         </TripsProvider>
