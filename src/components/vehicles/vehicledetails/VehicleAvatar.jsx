@@ -12,13 +12,11 @@ const VehicleAvatar = ({ imageUrl, status }) => {
             import.meta.env.VITE_API_URL
           }/vehicles-avatar/${imageUrl}`;
           const response = await axios.get(link, { responseType: "blob" });
-
-          // Assuming you want to display the fetched image directly
           const url = URL.createObjectURL(response.data);
           setVehicleImage(url);
         } catch (error) {
           console.error("Error fetching vehicle avatar:", error);
-          setVehicleImage(null); // Reset image state on error
+          setVehicleImage(null);
         }
       }
     };
@@ -27,7 +25,7 @@ const VehicleAvatar = ({ imageUrl, status }) => {
 
     return () => {
       if (vehicleImage) {
-        URL.revokeObjectURL(vehicleImage); // Clean up object URL on unmount
+        URL.revokeObjectURL(vehicleImage);
       }
     };
   }, [imageUrl]);

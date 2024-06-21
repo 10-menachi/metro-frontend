@@ -12,8 +12,9 @@ import { DriverContext } from "../../../context/DriverContext";
 const ViewDriverDetails = ({ isOpen, handleClose, driver }) => {
   const [driverData, setDriverData] = useState(driver);
   const { updateDriver } = useContext(DriverContext);
-  const { name, address } = driver.user;
+  const { name, address, avatar } = driver.user;
   const {
+    id,
     driving_license_date_issued,
     driving_license_no,
     driving_license_date_expiry,
@@ -121,7 +122,7 @@ const ViewDriverDetails = ({ isOpen, handleClose, driver }) => {
                   >
                     <i className="fas fa-times text-white text-2xl"></i>
                   </span>
-                  <DriverAvatar status={status} />
+                  <DriverAvatar imageUrl={avatar} status={status} />
                   <p className="text-md text-white text-xl font-bold">
                     {name || "-"}
                   </p>

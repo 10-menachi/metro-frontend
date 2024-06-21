@@ -22,6 +22,7 @@ export async function getVehicles() {
       Authorization: `Bearer ${getTokenFromLocalStorage()}`,
     },
   });
+  console.log(response);
   return response.data;
 }
 

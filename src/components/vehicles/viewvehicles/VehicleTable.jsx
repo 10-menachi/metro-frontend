@@ -29,7 +29,7 @@ const VehicleTable = () => {
     setDeleteModalOpen(true);
   };
 
-  const handleDeteteClose = () => {
+  const handleDeleteClose = () => {
     setDeleteModalOpen(false);
     setSelectedVehicle(null);
   };
@@ -44,7 +44,7 @@ const VehicleTable = () => {
     setSelectedVehicle(null);
   };
 
-  const handleDeteteVehicle = async (id) => {
+  const handleDeleteVehicle = async (id) => {
     const response = await deleteVehicleFromApi(id);
     console.log(response);
     deleteVehicle(id);
@@ -54,41 +54,47 @@ const VehicleTable = () => {
 
   return (
     <div className="relative overflow-x-auto">
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" className="px-6 py-3">
-              Make
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Model
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Year
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Plate Number
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Seats
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {vehicles.map((vehicle) => (
-            <VehicleTableRow
-              key={vehicle.id}
-              vehicle={vehicle}
-              handleOpen={handleOpen}
-              handleEditOpen={handleEditOpen}
-              handleDeleteOpen={handleDeleteOpen}
-            />
-          ))}
-        </tbody>
-      </table>
+      {vehicles.length === 0 ? (
+        <div className="text-center py-6 text-gray-500 dark:text-gray-400">
+          No vehicles found.
+        </div>
+      ) : (
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                Make
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Model
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Year
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Plate Number
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Seats
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {vehicles.map((vehicle) => (
+              <VehicleTableRow
+                key={vehicle.id}
+                vehicle={vehicle}
+                handleOpen={handleOpen}
+                handleEditOpen={handleEditOpen}
+                handleDeleteOpen={handleDeleteOpen}
+              />
+            ))}
+          </tbody>
+        </table>
+      )}
       {isDetailModalOpen && (
         <VehicleDetails
           vehicle={selectedVehicle}
@@ -96,7 +102,6 @@ const VehicleTable = () => {
           isOpen={isDetailModalOpen}
         />
       )}
-
       {isEditModalOpen && (
         <EditVehicle
           vehicle={selectedVehicle}
@@ -104,13 +109,12 @@ const VehicleTable = () => {
           isOpen={isEditModalOpen}
         />
       )}
-
       {isDeleteModalOpen && (
         <DeleteVehicle
           vehicle={selectedVehicle}
-          handleClose={handleDeteteClose}
+          handleClose={handleDeleteClose}
           isOpen={isDeleteModalOpen}
-          handleDeleteVehicle={handleDeteteVehicle}
+          handleDeleteVehicle={handleDeleteVehicle}
         />
       )}
     </div>
