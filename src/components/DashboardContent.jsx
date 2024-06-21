@@ -2,11 +2,14 @@ import React, { useContext } from "react";
 import DashboardContentCard from "./DashboardContentCard";
 import { AppContext } from "../context/AppContext";
 import { AuthContext } from "../context/AuthContext";
+import { VehicleContext } from "../context/VehicleContext";
+import { DriverContext } from "../context/DriverContext";
 
 const DashboardContent = () => {
-  const { user, authenticated } = useContext(AuthContext);
-  const { customers, vehicles, organisations, drivers } =
-    useContext(AppContext);
+  const { user } = useContext(AuthContext);
+  const { customers, organisations } = useContext(AppContext);
+  const { vehicles } = useContext(VehicleContext);
+  const { drivers } = useContext(DriverContext);
   const isAdmin = user.roles.some((role) => role.name === "admin");
   return (
     <div className="p-4 py-20 sm:ml-64">

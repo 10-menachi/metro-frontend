@@ -9,7 +9,7 @@ export const VehicleProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const vehiclesData = Promise.all([getVehicles()]);
+        const vehiclesData = await getVehicles();
         setVehicles(vehiclesData.vehicles);
       } catch (error) {
         console.error("Error fetching data", error);

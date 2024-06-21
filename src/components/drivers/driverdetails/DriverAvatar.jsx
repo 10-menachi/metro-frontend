@@ -2,15 +2,8 @@ import React from "react";
 
 const VehicleAvatar = ({ imageUrl, status }) => {
   const vehicleImage = imageUrl;
-  const anonymousVehicleSvg = (
-    <svg
-      className="absolute w-16 h-16 text-gray-400 p-2"
-      fill="currentColor"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M5 11V9a3 3 0 013-3h8a3 3 0 013 3v2h1a1 1 0 011 1v6a1 1 0 01-1 1h-1a2 2 0 01-4 0h-6a2 2 0 01-4 0H4a1 1 0 01-1-1v-6a1 1 0 011-1h1zm2-2v2h10V9a1 1 0 00-1-1H8a1 1 0 00-1 1zm11 4a1 1 0 110 2 1 1 0 010-2zm-10 0a1 1 0 110 2 1 1 0 010-2z"></path>
-    </svg>
+  const anonymousDriverIcon = (
+    <i className="text-gray-400 fas fa-user text-3xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
   );
 
   let ringColorClass = "ring-white";
@@ -32,7 +25,7 @@ const VehicleAvatar = ({ imageUrl, status }) => {
           alt="Vehicle avatar"
         />
       ) : (
-        anonymousVehicleSvg
+        anonymousDriverIcon
       )}
     </div>
   );

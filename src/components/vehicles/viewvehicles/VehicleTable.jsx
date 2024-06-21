@@ -1,18 +1,18 @@
 import React, { useContext, useState } from "react";
 import VehicleTableRow from "../vehicledetails/VehicleTableRow";
 import VehicleDetails from "../vehicledetails/VehicleDetails";
-import { AppContext } from "../../../context/AppContext";
 import EditVehicle from "../vehicledetails/EditVehicle";
 import DeleteVehicle from "../vehicledetails/DeleteVehicle";
 import { deleteVehicleFromApi } from "../../../utils/vehicleUtils";
+import { VehicleContext } from "../../../context/VehicleContext";
 
 const VehicleTable = () => {
-  const { vehicles } = useContext(AppContext);
+  const { vehicles } = useContext(VehicleContext);
   const [isDetailModalOpen, setDetailModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
-  const { deleteVehicle } = useContext(AppContext);
+  const { deleteVehicle } = useContext(VehicleContext);
 
   const handleOpen = (vehicle) => {
     setSelectedVehicle(vehicle);
